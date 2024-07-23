@@ -1,0 +1,138 @@
+{
+    "location": {
+        "name": "London",
+        "country": "United Kingdom",
+        "lat": 51.52,
+        "lon": -0.11,
+        "localtime": "2024-07-23 17:07"
+    },
+    "current": {
+        "temp_c": 20.9,
+        "temp_f": 69.7,
+        "is_day": 1,
+        "condition": {
+            "text": "Cloudy",
+            "icon": "//cdn.weatherapi.com/weather/64x64/day/119.png",
+            "code": 1006
+        },
+        "wind_kph": 10.1,
+        "wind_dir": "NE",
+        "humidity": 62,
+        "cloud": 87,
+        "feelslike_c": 20.9,
+        "feelslike_f": 69.7,
+        "vis_km": 10.0,
+        "uv": 5.0
+    },
+    "forecast": {
+        "forecastday": [
+            {
+                "date": "2024-07-23",
+                "day": {
+                    "maxtemp_c": 22.9,
+                    "maxtemp_f": 73.2,
+                    "mintemp_c": 16.9,
+                    "mintemp_f": 62.4,
+                    "avgtemp_c": 19.1,
+                    "avgtemp_f": 66.4,
+                    "avghumidity": 76,
+                    "daily_will_it_rain": 1,
+                    "daily_chance_of_rain": 98,
+                    "daily_will_it_snow": 0,
+                    "daily_chance_of_snow": 0,
+                    "condition": {
+                        "text": "Patchy rain nearby",
+                        "icon": "//cdn.weatherapi.com/weather/64x64/day/176.png",
+                        "code": 1063
+                    },
+                    "uv": 5.0
+                },
+                "astro": {
+                    "sunrise": "05:12 AM",
+                    "sunset": "09:01 PM",
+                    "moonrise": "10:28 PM",
+                    "moonset": "07:25 AM",
+                    "moon_phase": "Waning Gibbous",
+                    "moon_illumination": 97,
+                    "is_moon_up": 1,
+                    "is_sun_up": 0
+                },
+                "hour": [
+                    {
+                        "time": "2024-07-23 00:00",
+                        "temp_c": 17.3,
+                        "temp_f": 63.1,
+                        "is_day": 0,
+                        "condition": {
+                            "text": "Patchy rain nearby",
+                            "icon": "//cdn.weatherapi.com/weather/64x64/night/176.png",
+                            "code": 1063
+                        },
+                        "wind_kph": 10.4,
+                        "wind_degree": 219,
+                        "wind_dir": "SW",
+                        "humidity": 89,
+                        "feelslike_c": 17.3,
+                        "feelslike_f": 63.1,
+                        "will_it_rain": 1,
+                        "chance_of_rain": 100,
+                        "will_it_snow": 0,
+                        "chance_of_snow": 0,
+                        "vis_km": 10.0,
+                        "uv": 0
+                    },
+                    {
+                        
+                        "time": "2024-07-23 00:00",
+                        "temp_c": 17.3,
+                        "temp_f": 63.1,
+                        "is_day": 0,
+                        "condition": {
+                            "text": "Patchy rain nearby",
+                            "icon": "//cdn.weatherapi.com/weather/64x64/night/176.png",
+                            "code": 1063
+                        },
+                        "wind_kph": 10.4,
+                        "wind_degree": 219,
+                        "wind_dir": "SW",
+                        "humidity": 89,
+                        "feelslike_c": 17.3,
+                        "feelslike_f": 63.1,
+                        "will_it_rain": 1,
+                        "chance_of_rain": 100,
+                        "will_it_snow": 0,
+                        "chance_of_snow": 0,
+                        "vis_km": 10.0,
+                        "uv": 0
+                    },
+                    {
+                        "time": "2024-07-23 00:00",
+                        "temp_c": 17.3,
+                        "temp_f": 63.1,
+                        "is_day": 0,
+                        "condition": {
+                            "text": "Patchy rain nearby",
+                            "icon": "//cdn.weatherapi.com/weather/64x64/night/176.png",
+                            "code": 1063
+                        },
+                        "wind_kph": 10.4,
+                        "wind_degree": 219,
+                        "wind_dir": "SW",
+                        "humidity": 89,
+                        "feelslike_c": 17.3,
+                        "feelslike_f": 63.1,
+                        "will_it_rain": 1,
+                        "chance_of_rain": 100,
+                        "will_it_snow": 0,
+                        "chance_of_snow": 0,
+                        "vis_km": 10.0,
+                        "uv": 0
+                    }
+                ]
+            }
+        ]
+    },
+    "alerts": {
+        "alert": []
+    }
+}
