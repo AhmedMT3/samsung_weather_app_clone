@@ -1,39 +1,76 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
+import 'package:weather_app/model/forecast.dart';
+
 class HourlyForcast extends StatelessWidget {
-  const HourlyForcast({super.key});
+  const HourlyForcast({
+    super.key,
+    required this.day,
+    required this.hours,
+  });
+  final Day day;
+  final List<Hour> hours;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 130,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 12,
-        itemBuilder: (context, index) => const Row(
-          children: [
-            Column(
-              children: [
-                Text("01:00"),
-                SizedBox(height: 10),
-                Icon(Icons.nightlight_round_sharp),
-                SizedBox(height: 10),
-                Text("31˚"),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.water_drop_sharp,
-                      size: 15,
-                    ),
-                    Text("0%")
-                  ],
-                ),
-              ],
+    return Container(
+      padding: const EdgeInsets.all(13),
+      width: double.infinity,
+      decoration: BoxDecoration(
+          color: const Color(0xC919346B),
+          borderRadius: BorderRadius.circular(12)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "${day.condition!.text}. Low of ${day.mintempC!.toInt()}C˚.",
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const Divider(
+            thickness: 0.2,
+            color: Color(0xFF9495B8),
+          ),
+          SizedBox(
+            height: 130,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 24,
+              itemBuilder: (context, index) => Row(
+                children: [
+                  Column(
+                    children: [
+                      Text(hours[index].time!.substring(11, 13)),
+                      const SizedBox(height: 10),
+                      Icon(
+                        hours[index].isDay == 1
+                            ? Icons.wb_sunny
+                            : Icons.nightlight_round_sharp,
+                      ),
+                      const SizedBox(height: 10),
+                      Text("${hours[index].tempC!.toInt()}˚"),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.water_drop_sharp,
+                            size: 15,
+                            color: Color(0xFF637BA7),
+                          ),
+                          Text(
+                            "${hours[index].chanceOfRain}%",
+                            style: const TextStyle(fontSize: 12),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 10),
+                ],
+              ),
             ),
-            SizedBox(width: 10),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }

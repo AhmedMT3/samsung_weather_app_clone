@@ -4,13 +4,12 @@ class ForecastWeather {
   ForecastWeather({this.forecast});
 
   ForecastWeather.fromJson(Map<String, dynamic> json) {
-    forecast = json['forecast'] != null
-        ?  Forecast.fromJson(json['forecast'])
-        : null;
+    forecast =
+        json['forecast'] != null ? Forecast.fromJson(json['forecast']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (forecast != null) {
       data['forecast'] = forecast!.toJson();
     }
@@ -27,13 +26,13 @@ class Forecast {
     if (json['forecastday'] != null) {
       forecastday = <Forecastday>[];
       json['forecastday'].forEach((v) {
-        forecastday!.add( Forecastday.fromJson(v));
+        forecastday!.add(Forecastday.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (forecastday != null) {
       data['forecastday'] = forecastday!.map((v) => v.toJson()).toList();
     }
@@ -51,18 +50,18 @@ class Forecastday {
 
   Forecastday.fromJson(Map<String, dynamic> json) {
     date = json['date'];
-    day = json['day'] != null ?  Day.fromJson(json['day']) : null;
-    astro = json['astro'] != null ?  Astro.fromJson(json['astro']) : null;
+    day = json['day'] != null ? Day.fromJson(json['day']) : null;
+    astro = json['astro'] != null ? Astro.fromJson(json['astro']) : null;
     if (json['hour'] != null) {
       hour = <Hour>[];
       json['hour'].forEach((v) {
-        hour!.add( Hour.fromJson(v));
+        hour!.add(Hour.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['date'] = date;
     if (day != null) {
       data['day'] = day!.toJson();
@@ -90,7 +89,7 @@ class Day {
   int? dailyWillItSnow;
   int? dailyChanceOfSnow;
   Condition? condition;
-  int? uv;
+  double? uv;
 
   Day(
       {this.maxtempC,
@@ -120,13 +119,13 @@ class Day {
     dailyWillItSnow = json['daily_will_it_snow'];
     dailyChanceOfSnow = json['daily_chance_of_snow'];
     condition = json['condition'] != null
-        ?  Condition.fromJson(json['condition'])
+        ? Condition.fromJson(json['condition'])
         : null;
     uv = json['uv'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['maxtemp_c'] = maxtempC;
     data['maxtemp_f'] = maxtempF;
     data['mintemp_c'] = mintempC;
@@ -160,7 +159,7 @@ class Condition {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['text'] = text;
     data['icon'] = icon;
     data['code'] = code;
@@ -200,7 +199,7 @@ class Astro {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['sunrise'] = sunrise;
     data['sunset'] = sunset;
     data['moonrise'] = moonrise;
@@ -228,9 +227,9 @@ class Hour {
   int? willItRain;
   int? chanceOfRain;
   int? willItSnow;
-  int? chanceOfSnow;
-  int? visKm;
-  int? uv;
+  double? chanceOfSnow;
+  double? visKm;
+  double? uv;
 
   Hour(
       {this.time,
@@ -253,28 +252,28 @@ class Hour {
 
   Hour.fromJson(Map<String, dynamic> json) {
     time = json['time'];
-    tempC = json['temp_c'];
-    tempF = json['temp_f'];
+    tempC = (json['temp_c'] as num?)?.toDouble();
+    tempF = (json['temp_f'] as num?)?.toDouble();
     isDay = json['is_day'];
     condition = json['condition'] != null
-        ?  Condition.fromJson(json['condition'])
+        ? Condition.fromJson(json['condition'])
         : null;
-    windKph = json['wind_kph'];
+    windKph = (json['wind_kph'] as num?)?.toDouble();
     windDegree = json['wind_degree'];
     windDir = json['wind_dir'];
     humidity = json['humidity'];
-    feelslikeC = json['feelslike_c'];
-    feelslikeF = json['feelslike_f'];
+    feelslikeC = (json['feelslike_c'] as num?)?.toDouble();
+    feelslikeF = (json['feelslike_f'] as num?)?.toDouble();
     willItRain = json['will_it_rain'];
     chanceOfRain = json['chance_of_rain'];
     willItSnow = json['will_it_snow'];
-    chanceOfSnow = json['chance_of_snow'];
-    visKm = json['vis_km'];
-    uv = json['uv'];
+    chanceOfSnow = (json['chance_of_snow'] as num?)?.toDouble();
+    visKm = (json['vis_km'] as num?)?.toDouble();
+    uv = (json['uv'] as num?)?.toDouble();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['time'] = time;
     data['temp_c'] = tempC;
     data['temp_f'] = tempF;
