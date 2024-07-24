@@ -1,12 +1,45 @@
-# weather_app
+# Weather app
 
-A new Flutter project.
+Samsung weather app clone with Flutter using free weatherapi.com
+## Features
+Weather app providing all of these features:
+1. Current weather data.
+2. Hourly forecast.
+3. Daily forecast (8 days ahead).
+4. Search by city name, IP address, Latitude/Longitude (decimal degree), US Zipcode, UK Postcode and Canada Postalcode.
 
-## Getting Started
+### Used API
+This app powered by free weather API from [weatherapi.com](https://www.weatherapi.com)
 
-This project is a starting point for a Flutter application.
+<a href="https://www.weatherapi.com/" title="Free Weather API"><img src='https://cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0"></a>
 
-A few resources to get you started if this is your first Flutter project:
+<br>
+
+## Used Packages
+You can read more about each package on [pub.dev](https://www.pub.dev)
+
+- `get`: ^4.6.6
+- `path`: ^1.9.0
+- `http`: ^1.2.2
+- `shared_preferences`: ^2.2.3
+- `intl`: ^0.19.0
+- `font_awesome_flutter`: ^10.7.0
+- `lottie`: ^3.1.2
+- `flutter_svg`: ^2.0.10+1
+
+## Usage
+1. Clone this repository.
+```
+https://github.com/ahmedmt3/weather_app.git
+```
+2. Or [Download ZIP file 📁](https://github.com/ahmedmt3/weather_app/archive/refs/heads/main.zip)
+
+## Contributing
+You can contribute by reporting bugs, suggesting improvements, and/or by helping out in code.
+
+</br>
+
+## Getting Started With Flutter?
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
