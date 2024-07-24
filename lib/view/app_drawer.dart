@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -8,11 +9,11 @@ import 'package:weather_app/model/current_weather.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
-    super.key,
-    required this.controller,
-    this.currentWeather,
-  });
-  final WeatherController controller;
+    Key? key,
+    required this.isLoading,
+    required this.currentWeather,
+  }) : super(key: key);
+  final bool isLoading;
   final CurrentWeather? currentWeather;
 
   @override
@@ -21,7 +22,7 @@ class AppDrawer extends StatelessWidget {
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
-          child: currentWeather == null
+          child: isLoading
               ? Center(
                   child: Lottie.asset("assets/lotties/loading.json"),
                 )

@@ -4,13 +4,16 @@ import 'package:flutter/widgets.dart';
 
 import 'package:weather_app/core/themes/app_styles.dart';
 import 'package:weather_app/model/current_weather.dart';
+import 'package:weather_app/model/forecast.dart';
 
 class LocationWidget extends StatelessWidget {
   const LocationWidget({
-    super.key,
+    Key? key,
     required this.currentWeather,
-  });
+    required this.day,
+  }) : super(key: key);
   final CurrentWeather currentWeather;
+  final Day day;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +51,7 @@ class LocationWidget extends StatelessWidget {
               "${currentWeather.current!.tempC!.toInt()}˚",
               style: AppStyles.bodyRegularXL,
             ),
-            Text("12˚ / 33˚")
+            Text("${day.maxtempC!.toInt()}˚ / ${day.mintempC!.toInt()}˚")
           ],
         )
       ]),

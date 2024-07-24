@@ -16,16 +16,17 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      drawer: AppDrawer(
-        controller: controller,
-        currentWeather: controller.currentWeather,
+      drawer: Obx(
+        () => AppDrawer(
+          isLoading: controller.isLoading.value,
+          currentWeather: controller.currentWeather,
+        ),
       ),
       body: GetBuilder<WeatherController>(
         builder: ((controller) => RefreshIndicator(
-              onRefresh: () => controller.getCurrentWeather('paris'),
+              onRefresh: () => controller.refreshWeather(),
               child: SafeArea(
-                child: controller.currentWeather == null &&
-                        controller.forecastWeather == null
+                child: controller.isLoading.value
                     ? Center(child: Lottie.asset("assets/lotties/loading.json"))
                     : SingleChildScrollView(
                         child: Padding(
@@ -39,14 +40,12 @@ class HomeView extends StatelessWidget {
                                     .forecastday!.first.day!,
                               ),
                               const SizedBox(height: 30),
-                              controller.forecastWeather!.forecast == null
-                                  ? Text("No day data")
-                                  : HourlyForcast(
-                                      hours: controller.forecastWeather!
-                                          .forecast!.forecastday!.first.hour!,
-                                      day: controller.forecastWeather!.forecast!
-                                          .forecastday!.first.day!,
-                                    ),
+                              HourlyForcast(
+                                hours: controller.forecastWeather!.forecast!
+                                    .forecastday!.first.hour!,
+                                day: controller.forecastWeather!.forecast!
+                                    .forecastday!.first.day!,
+                              ),
                               const SizedBox(height: 10),
                               OutlookWidget(),
                               const SizedBox(height: 10),

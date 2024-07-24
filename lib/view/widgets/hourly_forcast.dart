@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:weather_app/core/themes/app_styles.dart';
 
 import 'package:weather_app/model/forecast.dart';
 
@@ -15,7 +16,7 @@ class HourlyForcast extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(13),
+      padding: const EdgeInsets.all(12),
       width: double.infinity,
       decoration: BoxDecoration(
           color: const Color(0xC919346B),
@@ -25,14 +26,14 @@ class HourlyForcast extends StatelessWidget {
         children: [
           Text(
             "${day.condition!.text}. Low of ${day.mintempC!.toInt()}C˚.",
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: AppStyles.bodySemiBoldM,
           ),
           const Divider(
             thickness: 0.2,
             color: Color(0xFF9495B8),
           ),
           SizedBox(
-            height: 130,
+            height: 120,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: 24,
