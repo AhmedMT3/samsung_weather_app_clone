@@ -1,17 +1,16 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:weather_app/core/themes/app_styles.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/model/forecast.dart';
+import 'package:weather_app/util/helpers/app_helpers.dart';
 
 class LocationWidget extends StatelessWidget {
   const LocationWidget({
-    Key? key,
+    super.key,
     required this.currentWeather,
     required this.day,
-  }) : super(key: key);
+  });
   final CurrentWeather currentWeather;
   final Day day;
 
@@ -24,23 +23,26 @@ class LocationWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              currentWeather.location!.name!,
-              style: AppStyles.bodySemiBoldXL,
-            ),
-            Text(
-              currentWeather.location!.country!,
-              style: AppStyles.bodyRegularS,
-            ),
-            SizedBox(height: 10),
-            Text(
-              currentWeather.location!.localtime!,
-              style: AppStyles.bodyRegularS,
-            )
-          ],
+        Expanded(
+          flex: 4,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                currentWeather.location!.name!,
+                style: AppStyles.bodySemiBoldXL,
+              ),
+              Text(
+                currentWeather.location!.country!,
+                style: AppStyles.bodyRegularS,
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "${AppHelpers.getHumanReadableDate(currentWeather.location!.localtime!.split(' ').first)}, ${currentWeather.location!.localtime!.split(' ').last}",
+                style: AppStyles.bodyRegularS,
+              )
+            ],
+          ),
         ),
         const Spacer(),
         Image.network("https:${currentWeather.current!.condition!.icon}"),

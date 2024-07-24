@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/core/themes/app_styles.dart';
 import 'package:weather_app/model/current_weather.dart';
+import 'package:weather_app/util/helpers/app_helpers.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
@@ -19,12 +19,13 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: AppHelpers.screenWidth(context) / 1.2,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
           child: isLoading
               ? Center(
-                  child: Lottie.asset("assets/lotties/loading.json"),
+                  child: Lottie.asset("assets/lottie/loading.json"),
                 )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,9 +78,14 @@ class AppDrawer extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     MaterialButton(
-                      onPressed: () => Get.toNamed('/manage_loc'),
+                      onPressed: () {
+                        Get.back();
+                        Get.toNamed('/manage_loc');
+                      },
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 7),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       color: const Color(0xFF474646),
                       elevation: 0,
@@ -106,11 +112,17 @@ Container drawerLocationWidget({
     padding: const EdgeInsets.symmetric(horizontal: 20),
     child: Row(
       children: [
-        Icon(icon),
+        if (icon != null) ...[
+          Icon(icon),
+        ],
         const SizedBox(width: 10),
-        Text(
-          locationName,
-          style: AppStyles.bodyMediumXL,
+        Expanded(
+          flex: 4,
+          child: Text(
+            locationName,
+            style: AppStyles.bodyMediumXL,
+            overflow: TextOverflow.visible,
+          ),
         ),
         const Spacer(),
         if (imageUrl != null)

@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 import 'package:weather_app/core/themes/app_styles.dart';
 import 'package:weather_app/model/current_weather.dart';
@@ -22,34 +21,36 @@ class CurrentWeatherWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "${currentWeather.current!.tempC!.toInt().toString()}˚",
-              style: Theme.of(context).textTheme.displayLarge,
-            ),
-            SizedBox(
-              width: 150,
-              child: Text(currentWeather.current!.condition!.text!,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "${currentWeather.current!.tempC!.toInt().toString()}˚",
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+              Text(currentWeather.current!.condition!.text!,
                   style: AppStyles.bodyMediumXL),
-            ),
-            const SizedBox(height: 30),
-            Row(
-              children: [
-                const Icon(Icons.location_pin),
-                const SizedBox(width: 5),
-                Text(
-                  currentWeather.location!.name!,
-                  style: const TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Text(
-              "${day.maxtempC!.toInt()}˚ / ${day.mintempC!.toInt()}˚ Feels like ${currentWeather.current!.feelslikeC!.toInt()}˚",
-            ),
-          ],
+              const SizedBox(height: 30),
+              Row(
+                children: [
+                  const Icon(Icons.location_pin),
+                  const SizedBox(width: 5),
+                  Expanded(
+                    child: Text(
+                      currentWeather.location!.name!,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(
+                "${day.maxtempC!.toInt()}˚ / ${day.mintempC!.toInt()}˚ Feels like ${currentWeather.current!.feelslikeC!.toInt()}˚",
+              ),
+            ],
+          ),
         ),
         Image.network(
           "https:${currentWeather.current!.condition!.icon}"

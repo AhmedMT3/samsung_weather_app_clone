@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:weather_app/controller/weather_controller.dart';
-import 'package:weather_app/core/themes/app_styles.dart';
 import 'package:weather_app/view/widgets/location_widget.dart';
 
 class ManageLocationsView extends StatelessWidget {
-  ManageLocationsView({super.key});
-  final WeatherController controller = Get.find();
+  const ManageLocationsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class ManageLocationsView extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: GetBuilder<WeatherController>(
-            builder: (_) => Column(
+            builder: (controller) => Column(
               children: [
                 SearchBar(
                   padding: const WidgetStatePropertyAll(
@@ -28,17 +26,19 @@ class ManageLocationsView extends StatelessWidget {
                   elevation: const WidgetStatePropertyAll(1),
                   hintText: "Search location..",
                   trailing: const [Icon(Icons.search)],
-                  onSubmitted: (value) => controller.getCurrentWeather(value),
+                  onSubmitted: (value) => controller.getWeatherData(value),
                 ),
                 const SizedBox(height: 20),
                 SingleChildScrollView(
-                  child: controller.isLoading.value == true
-                      ? Lottie.asset("assets/lotties/search.json")
-                      : LocationWidget(
-                          currentWeather: controller.currentWeather!,
-                          day: controller.forecastWeather!.forecast!
-                              .forecastday!.first.day!,
-                        ),
+                  child: Obx(
+                    () => controller.isLoading.value == true
+                        ? Lottie.asset("assets/lottie/loading.json")
+                        : LocationWidget(
+                            currentWeather: controller.currentWeather!,
+                            day: controller.forecastWeather!.forecast!
+                                .forecastday!.first.day!,
+                          ),
+                  ),
                 )
               ],
             ),
