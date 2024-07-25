@@ -3,19 +3,19 @@
 Samsung weather app clone with Flutter using free weatherapi.com
 ## Features
 Weather app providing all of these features:
-1. Current weather data.
-2. Hourly forecast.
-3. Daily forecast (8 days ahead).
-4. Search by city name, IP address, Latitude/Longitude (decimal degree), US Zipcode, UK Postcode and Canada Postalcode.
+- Current weather data.
+- Hourly forecast.
+- Daily forecast (8 days ahead).
+- Search by city name, IP address, Latitude/Longitude (decimal degree), US Zipcode, UK Postcode and Canada Postalcode.
 
-### Used API
-This app powered by free weather API from [weatherapi.com](https://www.weatherapi.com)
+### API
+Weather app powered by free weather API from [weatherapi.com](https://www.weatherapi.com)
 
 <a href="https://www.weatherapi.com/" title="Free Weather API"><img src='https://cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0"></a>
 
 <br>
 
-## Used Packages
+## Packages
 You can read more about each package on [pub.dev](https://www.pub.dev)
 
 - `get`: ^4.6.6
@@ -28,11 +28,19 @@ You can read more about each package on [pub.dev](https://www.pub.dev)
 - `flutter_svg`: ^2.0.10+1
 
 ## Usage
-1. Clone this repository.
+1. Clone this repository. Or [Download ZIP file 📁](https://github.com/ahmedmt3/weather_app/archive/refs/heads/main.zip)
+```bash
+git clone https://github.com/ahmedmt3/weather_app.git
+cd weather_app
 ```
-https://github.com/ahmedmt3/weather_app.git
+2. Get dependencies & Run project
+
+```bash
+flutter pub get
+flutter run
 ```
-2. Or [Download ZIP file 📁](https://github.com/ahmedmt3/weather_app/archive/refs/heads/main.zip)
+## Installing
+Weather app isn't available on the play store yet, but you can download the apk [from here]()
 
 ## Contributing
 You can contribute by reporting bugs, suggesting improvements, and/or by helping out in code.
