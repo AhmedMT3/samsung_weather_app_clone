@@ -9,7 +9,7 @@ class ForecastWeather {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (forecast != null) {
       data['forecast'] = forecast!.toJson();
     }
@@ -32,7 +32,7 @@ class Forecast {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (forecastday != null) {
       data['forecastday'] = forecastday!.map((v) => v.toJson()).toList();
     }
@@ -61,7 +61,7 @@ class Forecastday {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['date'] = date;
     if (day != null) {
       data['day'] = day!.toJson();
@@ -125,7 +125,7 @@ class Day {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['maxtemp_c'] = maxtempC;
     data['maxtemp_f'] = maxtempF;
     data['mintemp_c'] = mintempC;
@@ -159,7 +159,7 @@ class Condition {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['text'] = text;
     data['icon'] = icon;
     data['code'] = code;
@@ -199,7 +199,7 @@ class Astro {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['sunrise'] = sunrise;
     data['sunset'] = sunset;
     data['moonrise'] = moonrise;
@@ -273,7 +273,7 @@ class Hour {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['time'] = time;
     data['temp_c'] = tempC;
     data['temp_f'] = tempF;

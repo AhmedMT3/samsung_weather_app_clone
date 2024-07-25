@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/manage_loc',
-          page: () => ManageLocationsView(),
+          page: () => const ManageLocationsView(),
         ),
       ],
       theme: AppThemes.darkTheme,

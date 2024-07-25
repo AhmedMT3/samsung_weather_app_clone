@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:flutter/material.dart';
 
 import 'package:weather_app/controller/weather_controller.dart';
@@ -8,10 +6,10 @@ import 'package:weather_app/model/forecast.dart';
 
 class OutlookWidget extends StatelessWidget {
   const OutlookWidget({
-    Key? key,
+    super.key,
     required this.astro,
     required this.controller,
-  }) : super(key: key);
+  });
   final Astro astro;
   final WeatherController controller;
 

@@ -9,10 +9,10 @@ import 'package:weather_app/util/helpers/app_helpers.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
-    Key? key,
+    super.key,
     required this.isLoading,
     required this.currentWeather,
-  }) : super(key: key);
+  });
   final bool isLoading;
   final CurrentWeather? currentWeather;
 
