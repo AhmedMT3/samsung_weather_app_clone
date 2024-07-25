@@ -17,9 +17,22 @@ Weather app powered by free weather API from [weatherapi.com](https://www.weathe
 
 ## Screenshots
 
-<img src="assets/screenshots/home.png" alt="Home Page" height="500">
-
-<img src="assets/screenshots/home2.png" alt="Home Page" height="500">
+<div style="display: flex;">
+  <img src="assets/screenshots/home.png" alt="Cairo Weather Screenshot" height="400" style="margin-right: 30px;">
+  <img src="assets/screenshots/home2.png" alt="Texas Cairo Weather Screenshot" height="400">
+</div>
+<div style="display: flex;">
+  <img src="assets/screenshots/details.png" alt="Details Home Page" height="400" style="margin-right: 30px;">
+  <img src="assets/screenshots/drawer.png" alt="Drawer Screenshot" height="400">
+</div>
+<br>
+<div style="display: flex;">
+  <img src="assets/screenshots/search1.png" alt="Search Page" height="180" style="margin-right: 30px;">
+  <img src="assets/screenshots/search2.png" alt="Search Page" width="200">
+   <img src="assets/screenshots/search3.png" alt="Search Page" width="200" style="margin-right: 30px;">
+  <img src="assets/screenshots/search4.png" alt="Search Page" width="200">
+</div>
+<br>
 
 
 ## Packages
