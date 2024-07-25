@@ -16,7 +16,11 @@ Weather app powered by free weather API from [weatherapi.com](https://www.weathe
 <br>
 
 ## Screenshots
-![Screeen one](assets/screenshots/details.png)
+
+<img src="assets/screenshots/home.png" alt="Home Page" height="500">
+
+<img src="assets/screenshots/home2.png" alt="Home Page" height="500">
+
 
 ## Packages
 You can read more about each package on [pub.dev](https://www.pub.dev)
