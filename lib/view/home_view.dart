@@ -30,7 +30,7 @@ class HomeView extends StatelessWidget {
               onRefresh: () => controller.refreshWeather(),
               child: SafeArea(
                 child: controller.isLoading.value
-                    ? Center(child: Lottie.asset("assets/lottie/loading.json"))
+                    ? Center(child: Lottie.asset("assets/lottie/offline.json"))
                     : SingleChildScrollView(
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather_app/model/api_response.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/model/forecast.dart';
 import 'package:weather_app/util/helpers/app_helpers.dart';
@@ -17,6 +18,7 @@ class WeatherController extends GetxController {
   ForecastWeather? forecastWeather;
   PageController outlookPageController = PageController();
   int currOutlookPage = 0;
+  late ApiResponse responseStatus;
 
 /*
 ===========================================================
@@ -25,33 +27,24 @@ class WeatherController extends GetxController {
  */
   Future<void> getWeatherData(String location) async {
     isLoading(true);
-    try {
-      var response = await apiServices.getRequest(endPoint: "&q=$location");
+    var response = await apiServices.getRequest(endPoint: "&q=$location");
 
-      if (response != null) {
-        // log("Response: ${response.toString()}");
-        currentWeather = CurrentWeather.fromJson(response);
-        forecastWeather = ForecastWeather.fromJson(response);
-        await _pref.setString('location', location);
-        this.location = location;
-      } else {
-        log("Response: $response");
-        AppHelpers.showSnackbar(
-          title: "Error",
-          message: "Incorrect location",
-        );
-        return;
-      }
-    } catch (_) {
-      AppHelpers.showSnackbar(
-        title: 'Error',
-        message: "Failed to get Location data.",
-      );
-    } finally {
-      isLoading(false);
+    if (response.isRight()) {
+      responseStatus = ApiResponse.ok;
+      log(responseStatus.toString());
 
-      update();
+      Map<String, dynamic> jsonResponse = response.getOrElse(() => {});
+      // log("Response: ${jsonResponse.toString()}");
+      currentWeather = CurrentWeather.fromJson(jsonResponse);
+      forecastWeather = ForecastWeather.fromJson(jsonResponse);
+      await _pref.setString('location', location);
+      this.location = location;
+    } else {
+      responseStatus = response.fold((l) => l, (r) => ApiResponse.unknownErr);
+      log(responseStatus.toString());
     }
+    isLoading(false);
+    update();
   }
 
   Future<void> refreshWeather() async {

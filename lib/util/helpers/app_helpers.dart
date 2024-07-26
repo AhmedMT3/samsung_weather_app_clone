@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AppHelpers {
+  static double screenWidth(BuildContext ctx) => MediaQuery.of(ctx).size.width;
+  static double screenHight(BuildContext ctx) => MediaQuery.of(ctx).size.height;
+
   static SnackbarController showSnackbar({
     required String title,
     required String message,
@@ -47,6 +52,16 @@ class AppHelpers {
     }
   }
 
-  static double screenWidth(BuildContext ctx) => MediaQuery.of(ctx).size.width;
-  static double screenHight(BuildContext ctx) => MediaQuery.of(ctx).size.height;
+  static Future<bool> checkInternet() async {
+    try {
+      var result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty) {
+        return true;
+      } else {
+        return false;
+      }
+    } on SocketException catch (_) {
+      return false;
+    }
+  }
 }
