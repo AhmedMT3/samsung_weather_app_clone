@@ -2,16 +2,16 @@ import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:weather_app/core/themes/app_themes.dart';
 import 'package:weather_app/model/api_response.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/model/forecast.dart';
-import 'package:weather_app/util/helpers/app_helpers.dart';
 import 'package:weather_app/util/services/api_services.dart';
 
 class WeatherController extends GetxController {
   final ApiServices apiServices = ApiServices();
-  late SharedPreferences _pref;
+  final GetStorage box = GetStorage();
   String location = "Paris";
   RxBool isLoading = false.obs;
   CurrentWeather? currentWeather;
@@ -19,6 +19,7 @@ class WeatherController extends GetxController {
   PageController outlookPageController = PageController();
   int currOutlookPage = 0;
   late ApiResponse responseStatus;
+  Color? backgroundColor;
 
 /*
 ===========================================================
@@ -37,8 +38,9 @@ class WeatherController extends GetxController {
       // log("Response: ${jsonResponse.toString()}");
       currentWeather = CurrentWeather.fromJson(jsonResponse);
       forecastWeather = ForecastWeather.fromJson(jsonResponse);
-      await _pref.setString('location', location);
+      box.write('location', location);
       this.location = location;
+      updateBackgrounColor();
     } else {
       responseStatus = response.fold((l) => l, (r) => ApiResponse.unknownErr);
       log(responseStatus.toString());
@@ -56,11 +58,18 @@ class WeatherController extends GetxController {
     update();
   }
 
+  void updateBackgrounColor() {
+    if (currentWeather!.current!.isDay == 1) {
+      backgroundColor = AppThemes.dayBackground;
+    } else {
+      backgroundColor = AppThemes.nightBackground;
+    }
+  }
+
   @override
   void onInit() async {
     isLoading(true);
-    _pref = await SharedPreferences.getInstance();
-    location = _pref.getString('location') ?? location;
+    location = box.read('location') ?? location;
     await getWeatherData(location);
     super.onInit();
   }

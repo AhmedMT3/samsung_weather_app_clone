@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:weather_app/core/themes/app_styles.dart';
+import 'package:weather_app/core/themes/app_themes.dart';
 
 import 'package:weather_app/model/forecast.dart';
 
@@ -19,7 +20,7 @@ class HourlyForcast extends StatelessWidget {
       padding: const EdgeInsets.all(12),
       width: double.infinity,
       decoration: BoxDecoration(
-          color: const Color(0xC919346B),
+          color: AppThemes.widgetLight,
           borderRadius: BorderRadius.circular(12)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

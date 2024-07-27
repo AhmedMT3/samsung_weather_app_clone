@@ -3,33 +3,48 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
+import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/core/themes/app_styles.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/util/helpers/app_helpers.dart';
+import 'package:weather_app/view/widgets/drawer/drawer_location_widget.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({
     super.key,
-    required this.isLoading,
-    required this.currentWeather,
+    required this.controller,
   });
-  final bool isLoading;
-  final CurrentWeather? currentWeather;
+  final WeatherController controller;
 
   @override
   Widget build(BuildContext context) {
+    final CurrentWeather? currentWeather = controller.currentWeather;
+
     return Drawer(
       width: AppHelpers.screenWidth(context) / 1.2,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 50),
-          child: isLoading
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          child: controller.isLoading.value
               ? Center(
                   child: Lottie.asset("assets/lottie/loading.json"),
                 )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        alignment: Alignment.topLeft,
+                        iconSize: 30,
+                        onPressed: () {
+                          Get.back();
+                          Get.toNamed('/settings');
+                        },
+                        icon: const Icon(Icons.settings),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         const Icon(
@@ -46,7 +61,7 @@ class AppDrawer extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    drawerLocationWidget(
+                    DrawerLocationWidget(
                       icon: Icons.location_pin,
                       locationName: currentWeather!.location!.name!,
                       imageUrl: currentWeather!.current!.condition!.icon,
@@ -71,7 +86,7 @@ class AppDrawer extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
-                    drawerLocationWidget(
+                    DrawerLocationWidget(
                       locationName: currentWeather!.location!.name!,
                       imageUrl: currentWeather!.current!.condition!.icon,
                       temp: currentWeather!.current!.tempC!.toInt().toString(),
@@ -100,39 +115,4 @@ class AppDrawer extends StatelessWidget {
       ),
     );
   }
-}
-
-Container drawerLocationWidget({
-  IconData? icon,
-  required String locationName,
-  String? imageUrl,
-  required String temp,
-}) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
-    child: Row(
-      children: [
-        if (icon != null) ...[
-          Icon(icon),
-        ],
-        const SizedBox(width: 10),
-        Expanded(
-          flex: 4,
-          child: Text(
-            locationName,
-            style: AppStyles.bodyMediumXL,
-            overflow: TextOverflow.visible,
-          ),
-        ),
-        const Spacer(),
-        if (imageUrl != null)
-          Image.network(
-            "https:$imageUrl",
-            scale: 2,
-          ),
-        const SizedBox(width: 10),
-        Text(temp)
-      ],
-    ),
-  );
 }
