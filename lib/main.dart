@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:weather_app/core/themes/app_themes.dart';
+import 'package:weather_app/util/services/app_bindings.dart';
 import 'package:weather_app/view/home_view.dart';
 import 'package:weather_app/view/manage_locations_view.dart';
 import 'package:weather_app/view/settings_view.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
+      initialBinding: AppBindings(),
       getPages: [
         GetPage(
           name: '/',

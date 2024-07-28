@@ -64,8 +64,8 @@ class AppDrawer extends StatelessWidget {
                     DrawerLocationWidget(
                       icon: Icons.location_pin,
                       locationName: currentWeather!.location!.name!,
-                      imageUrl: currentWeather!.current!.condition!.icon,
-                      temp: currentWeather!.current!.tempC!.toInt().toString(),
+                      imageUrl: currentWeather.current!.condition!.icon,
+                      temp: currentWeather.current!.tempC!.toInt().toString(),
                     ),
                     const SizedBox(height: 10),
                     const Divider(),
@@ -87,9 +87,9 @@ class AppDrawer extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     DrawerLocationWidget(
-                      locationName: currentWeather!.location!.name!,
-                      imageUrl: currentWeather!.current!.condition!.icon,
-                      temp: currentWeather!.current!.tempC!.toInt().toString(),
+                      locationName: currentWeather.location!.name!,
+                      imageUrl: currentWeather.current!.condition!.icon,
+                      temp: currentWeather.current!.tempC!.toInt().toString(),
                     ),
                     const SizedBox(height: 30),
                     MaterialButton(

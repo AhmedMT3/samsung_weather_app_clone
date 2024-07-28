@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:weather_app/controller/weather_controller.dart';
-import 'package:weather_app/core/themes/app_themes.dart';
 import 'package:weather_app/util/helpers/app_helpers.dart';
 import 'package:weather_app/view/widgets/home/daily_forcast.dart';
 import 'package:weather_app/view/widgets/home/double_property_widget.dart';
@@ -13,12 +12,11 @@ import 'package:weather_app/view/widgets/home/hourly_forcast.dart';
 import 'package:weather_app/view/widgets/home/property_widget.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({super.key});
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WeatherController>(
-      init: WeatherController(),
       builder: (controller) => Scaffold(
         backgroundColor: controller.backgroundColor,
         appBar: AppBar(),
