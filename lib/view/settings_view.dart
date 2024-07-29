@@ -56,9 +56,9 @@ class SettingsView extends StatelessWidget {
                     ),
                     myDivider(),
                     PopupSettingsMenuItem(
-                      isBottm: true,
+                      isBottom: true,
                       property: "Auto refresh",
-                      value: "Every ${controller.refreshTime.inHours} hour",
+                      value: "Every ${controller.refreshTime.inHours} hours",
                       options: (context) => [
                         PopupMenuItem(
                           child: Text("Never"),

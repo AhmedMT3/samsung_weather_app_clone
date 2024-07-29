@@ -1,6 +1,7 @@
 # Weather app
 
 Samsung weather app clone with Flutter using free weatherapi.com
+
 ## Features
 Weather app providing all of these features:
 - Current weather data.

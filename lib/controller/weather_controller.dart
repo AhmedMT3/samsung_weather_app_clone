@@ -70,12 +70,10 @@ class WeatherController extends GetxController {
     }
   }
 
-  void autoRefresh() {
+  void _autoRefresh() {
     if (settingsController.refreshTime.inHours != 0) {
-      timer = Timer.periodic(
-        settingsController.refreshTime,
-        (t) => refreshWeather(),
-      );
+      refreshWeather();
+      log("Auto Refreshed at ${DateTime.now()}");
     }
   }
 
@@ -84,7 +82,8 @@ class WeatherController extends GetxController {
     isLoading(true);
     location = box.read('location') ?? location;
     await getWeatherData(location);
-    autoRefresh();
+    timer =
+        Timer.periodic(settingsController.refreshTime, (t) => _autoRefresh());
     super.onInit();
   }
 }

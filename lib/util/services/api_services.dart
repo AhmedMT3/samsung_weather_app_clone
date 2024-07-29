@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
-import 'package:weather_app/core/app_config.dart';
+import 'package:weather_app/core/config/app_config.dart';
 import 'package:weather_app/model/api_response.dart';
 import 'package:weather_app/util/helpers/app_helpers.dart';
 
@@ -31,18 +31,4 @@ class ApiServices {
       return const Left(ApiResponse.unknownErr);
     }
   }
-
-  //=======================================================
-  // postRequest({required String endPoint, data}) async {
-  //   String fullUrl = AppConfig.baseUrl + endPoint;
-
-  //   http.Response response =
-  //       await http.post(Uri.parse(fullUrl), body: data);
-
-  //   if (response.statusCode == 200) {
-  //     return jsonDecode(response.body);
-  //   } else {
-  //     return null;
-  //   }
-  // }
 }

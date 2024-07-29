@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:weather_app/controller/weather_controller.dart';
+import 'package:weather_app/core/config/app_routes.dart';
 import 'package:weather_app/core/themes/app_styles.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/util/helpers/app_helpers.dart';
@@ -39,7 +40,7 @@ class AppDrawer extends StatelessWidget {
                         iconSize: 30,
                         onPressed: () {
                           Get.back();
-                          Get.toNamed('/settings');
+                          Get.toNamed(AppRoutes.settings);
                         },
                         icon: const Icon(Icons.settings),
                       ),
@@ -66,6 +67,10 @@ class AppDrawer extends StatelessWidget {
                       locationName: currentWeather!.location!.name!,
                       imageUrl: currentWeather.current!.condition!.icon,
                       temp: currentWeather.current!.tempC!.toInt().toString(),
+                      onTap: () {
+                        Get.back();
+                        Get.toNamed(AppRoutes.locations);
+                      },
                     ),
                     const SizedBox(height: 10),
                     const Divider(),
@@ -95,7 +100,7 @@ class AppDrawer extends StatelessWidget {
                     MaterialButton(
                       onPressed: () {
                         Get.back();
-                        Get.toNamed('/manage_loc');
+                        Get.toNamed(AppRoutes.locations);
                       },
                       padding: const EdgeInsets.symmetric(
                           horizontal: 50, vertical: 7),

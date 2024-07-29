@@ -5,18 +5,18 @@ import 'package:weather_app/core/themes/app_styles.dart';
 
 class PopupSettingsMenuItem extends StatelessWidget {
   const PopupSettingsMenuItem({
-    Key? key,
+    super.key,
     required this.property,
     required this.value,
     required this.options,
     this.isTop,
-    this.isBottm,
-  }) : super(key: key);
+    this.isBottom,
+  });
   final String property;
   final String value;
   final List<PopupMenuEntry<dynamic>> Function(BuildContext) options;
   final bool? isTop;
-  final bool? isBottm;
+  final bool? isBottom;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class PopupSettingsMenuItem extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       borderRadius: BorderRadius.vertical(
         top: isTop != null ? const Radius.circular(15) : Radius.zero,
-        bottom: isBottm != null ? const Radius.circular(15) : Radius.zero,
+        bottom: isBottom != null ? const Radius.circular(15) : Radius.zero,
       ),
       child: PopupMenuButton(
           color: const Color(0xFF373737),
