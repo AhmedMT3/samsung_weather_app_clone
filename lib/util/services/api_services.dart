@@ -7,10 +7,14 @@ import 'package:weather_app/model/api_response.dart';
 import 'package:weather_app/util/helpers/app_helpers.dart';
 
 class ApiServices {
-  Future<Either<ApiResponse, Map<String, dynamic>>> getRequest({
+  Future<Either<ApiResponse, dynamic>> getRequest({
     required String endPoint,
+    bool isSearch = false,
   }) async {
     String fullUrl = AppConfig.baseUrl + endPoint;
+    if (isSearch) {
+      fullUrl = AppConfig.searchUrl + endPoint;
+    }
     bool isOnline = await AppHelpers.checkInternet();
 
     try {

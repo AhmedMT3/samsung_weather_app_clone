@@ -3,12 +3,16 @@ import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:weather_app/controller/settings_controller.dart';
+import 'package:weather_app/core/config/app_routes.dart';
 import 'package:weather_app/core/themes/app_themes.dart';
 import 'package:weather_app/model/api_response.dart';
 import 'package:weather_app/model/current_weather.dart';
 import 'package:weather_app/model/forecast.dart';
+import 'package:weather_app/model/search_location.dart';
+import 'package:weather_app/model/weather.dart';
 import 'package:weather_app/util/services/api_services.dart';
 
 class WeatherController extends GetxController {
@@ -21,9 +25,12 @@ class WeatherController extends GetxController {
   PageController outlookPageController = PageController();
   int currOutlookPage = 0;
   late ApiResponse responseStatus;
+  Rx<ApiResponse> searchStatus = ApiResponse.unknownErr.obs;
   Color? backgroundColor;
   SettingsController settingsController = Get.find<SettingsController>();
   Timer? timer;
+  RxList<Weather> weathers = <Weather>[].obs;
+  RxList<SearchLocation> searchedLocations = <SearchLocation>[].obs;
 
 /*
 ===========================================================
@@ -42,6 +49,8 @@ class WeatherController extends GetxController {
       // log("Response: ${jsonResponse.toString()}");
       currentWeather = CurrentWeather.fromJson(jsonResponse);
       forecastWeather = ForecastWeather.fromJson(jsonResponse);
+      weathers.add(Weather(
+          currentWeather: currentWeather!, forecastWeather: forecastWeather!));
       box.write('location', location);
       this.location = location;
       updateBackgrounColor();
@@ -50,6 +59,38 @@ class WeatherController extends GetxController {
       log(responseStatus.toString());
     }
     isLoading(false);
+    update();
+  }
+
+  /*
+  ===========================================================
+  ===================[ Search Location ]====================
+  ===========================================================
+  */
+  void searchLocation(String query) async {
+    searchStatus(ApiResponse.loading);
+    var response =
+        await apiServices.getRequest(endPoint: "&q=$query", isSearch: true);
+    response.fold((left) {
+      searchStatus.value = left;
+      log(left.toString());
+    }, (right) {
+      List<dynamic> jsonRes = right;
+      if (jsonRes.isNotEmpty) {
+        searchStatus(ApiResponse.ok);
+        searchedLocations.value = jsonRes
+            .map(
+                (json) => SearchLocation.fromJson(json as Map<String, dynamic>))
+            .toList();
+      }
+    });
+    // update();
+  }
+
+  void selectLocation(String loc) {
+    getWeatherData(loc);
+    searchedLocations.clear();
+    Get.toNamed(AppRoutes.home);
     update();
   }
 
@@ -75,6 +116,13 @@ class WeatherController extends GetxController {
       refreshWeather();
       log("Auto Refreshed at ${DateTime.now()}");
     }
+  }
+
+  void onReorder(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) newIndex--;
+    final Weather tempWeather = weathers.removeAt(oldIndex);
+    weathers.insert(newIndex, tempWeather);
+    update();
   }
 
   @override

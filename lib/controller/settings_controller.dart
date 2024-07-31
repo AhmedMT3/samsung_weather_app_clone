@@ -10,11 +10,7 @@ class SettingsController extends GetxController {
   Duration refreshTime = const Duration(hours: 1);
 
   void setUnit(String unit) {
-    if (unit == 'C') {
-      this.unit = 'C';
-    } else {
-      this.unit = 'F';
-    }
+    this.unit = unit;
     box.write('unit', unit);
     log("Unit Changed To [˚$unit]");
     update();
@@ -23,7 +19,7 @@ class SettingsController extends GetxController {
   void setRefreshTime(int hours) {
     refreshTime = Duration(hours: hours);
     box.write('refreshTime', hours);
-    log("Refresh Time Changed [ EVERY $hours hours]");
+    log("Refresh Time [ EVERY $hours hours]");
     update();
   }
 

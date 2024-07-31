@@ -35,7 +35,8 @@ class HomeView extends StatelessWidget {
                         children: [
                           const SizedBox(height: 20),
                           CurrentWeatherWidget(
-                            currentWeather: controller.currentWeather!,
+                            location: controller.currentWeather!.location!,
+                            current: controller.currentWeather!.current!,
                             day: controller.forecastWeather!.forecast!
                                 .forecastday!.first.day!,
                           ),
