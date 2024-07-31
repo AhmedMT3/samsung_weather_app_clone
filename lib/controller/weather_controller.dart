@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:weather_app/controller/settings_controller.dart';
 import 'package:weather_app/core/config/app_routes.dart';
@@ -20,8 +19,7 @@ class WeatherController extends GetxController {
   final GetStorage box = GetStorage();
   String location = "Paris";
   RxBool isLoading = false.obs;
-  CurrentWeather? currentWeather;
-  ForecastWeather? forecastWeather;
+
   PageController outlookPageController = PageController();
   int currOutlookPage = 0;
   late ApiResponse responseStatus;
@@ -47,13 +45,13 @@ class WeatherController extends GetxController {
 
       Map<String, dynamic> jsonResponse = response.getOrElse(() => {});
       // log("Response: ${jsonResponse.toString()}");
-      currentWeather = CurrentWeather.fromJson(jsonResponse);
-      forecastWeather = ForecastWeather.fromJson(jsonResponse);
+
       weathers.add(Weather(
-          currentWeather: currentWeather!, forecastWeather: forecastWeather!));
+        currentWeather: CurrentWeather.fromJson(jsonResponse),
+        forecastWeather: ForecastWeather.fromJson(jsonResponse),
+      ));
       box.write('location', location);
       this.location = location;
-      updateBackgrounColor();
     } else {
       responseStatus = response.fold((l) => l, (r) => ApiResponse.unknownErr);
       log(responseStatus.toString());
@@ -64,7 +62,7 @@ class WeatherController extends GetxController {
 
   /*
   ===========================================================
-  ===================[ Search Location ]====================
+  ====================[ Search Location ]====================
   ===========================================================
   */
   void searchLocation(String query) async {
@@ -87,15 +85,26 @@ class WeatherController extends GetxController {
     // update();
   }
 
-  void selectLocation(String loc) {
-    getWeatherData(loc);
+  void selectLocation(String loc) async {
+    //Get weather, add it to the first and remove last one
+    await getWeatherData(loc);
+    weathers.insert(0, weathers.last);
+    weathers.removeLast();
     searchedLocations.clear();
+    searchStatus.value = ApiResponse.unknownErr;
+    updateBackgrounColor();
     Get.toNamed(AppRoutes.home);
+    log("Weathers Lenght: ${weathers.length}");
     update();
   }
 
   Future<void> refreshWeather() async {
-    await getWeatherData(location);
+    final String loc = weathers.first.currentWeather.location!.name!;
+    await getWeatherData(loc);
+    weathers.first = weathers.last;
+    weathers.removeLast();
+    updateBackgrounColor();
+    update();
   }
 
   void onOutlookPageChange(index) {
@@ -104,7 +113,7 @@ class WeatherController extends GetxController {
   }
 
   void updateBackgrounColor() {
-    if (currentWeather!.current!.isDay == 1) {
+    if (weathers.first.currentWeather.current!.isDay == 1) {
       backgroundColor = AppThemes.dayBackground;
     } else {
       backgroundColor = AppThemes.nightBackground;
@@ -122,6 +131,8 @@ class WeatherController extends GetxController {
     if (oldIndex < newIndex) newIndex--;
     final Weather tempWeather = weathers.removeAt(oldIndex);
     weathers.insert(newIndex, tempWeather);
+
+    refreshWeather();
     update();
   }
 
@@ -130,6 +141,7 @@ class WeatherController extends GetxController {
     isLoading(true);
     location = box.read('location') ?? location;
     await getWeatherData(location);
+    updateBackgrounColor();
     timer =
         Timer.periodic(settingsController.refreshTime, (t) => _autoRefresh());
     super.onInit();

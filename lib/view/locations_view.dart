@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/core/config/app_routes.dart';
+import 'package:weather_app/core/themes/app_styles.dart';
 import 'package:weather_app/view/widgets/manage_locations/location_widget.dart';
 
 class ManageLocationsView extends StatelessWidget {
@@ -29,7 +30,7 @@ class ManageLocationsView extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: GetBuilder<WeatherController>(
             builder: (controller) => Column(
               children: [
@@ -41,12 +42,40 @@ class ManageLocationsView extends StatelessWidget {
                             onReorder: (oldIndex, newIndex) =>
                                 controller.onReorder(oldIndex, newIndex),
                             itemCount: controller.weathers.length,
-                            itemBuilder: (context, index) => LocationWidget(
-                              key: Key(index.toString()),
-                              currentWeather:
-                                  controller.weathers[index].currentWeather,
-                              day: controller.weathers[index].forecastWeather
-                                  .forecast!.forecastday!.first.day!,
+                            header: titleRow(
+                              null,
+                              Icons.star_rounded,
+                              "Favourite location",
+                            ),
+                            itemBuilder: (context, index) => Column(
+                              key: Key("$index+Col"),
+                              children: [
+                                if (index == 1)
+                                  GestureDetector(
+                                    onLongPress: () {},
+                                    child: titleRow(
+                                      ValueKey("$index+title"),
+                                      Icons.add_location,
+                                      "Other locations",
+                                    ),
+                                  ),
+                                LocationWidget(
+                                  key: Key(index.toString()),
+                                  currentWeather:
+                                      controller.weathers[index].currentWeather,
+                                  day: controller
+                                      .weathers[index]
+                                      .forecastWeather
+                                      .forecast!
+                                      .forecastday!
+                                      .first
+                                      .day!,
+                                ),
+                                SizedBox(
+                                  key: Key("$index+SizedBox"),
+                                  height: 10,
+                                )
+                              ],
                             ),
                           ),
                         ),
@@ -56,6 +85,25 @@ class ManageLocationsView extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  titleRow(Key? key, IconData icon, String title) {
+    return Row(
+      key: key,
+      children: [
+        Icon(
+          icon,
+          size: 25,
+          color: Colors.grey,
+        ),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: AppStyles.bodyMediumL.copyWith(color: Colors.grey),
+        ),
+        const SizedBox(height: 40)
+      ],
     );
   }
 }

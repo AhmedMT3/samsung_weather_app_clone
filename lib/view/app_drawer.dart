@@ -7,6 +7,7 @@ import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/core/config/app_routes.dart';
 import 'package:weather_app/core/themes/app_styles.dart';
 import 'package:weather_app/model/current_weather.dart';
+import 'package:weather_app/model/weather.dart';
 import 'package:weather_app/util/helpers/app_helpers.dart';
 import 'package:weather_app/view/widgets/drawer/drawer_location_widget.dart';
 
@@ -19,7 +20,9 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CurrentWeather? currentWeather = controller.currentWeather;
+    final CurrentWeather firstCurrentWeather =
+        controller.weathers.first.currentWeather;
+    final RxList<Weather> weathers = controller.weathers;
 
     return Drawer(
       width: AppHelpers.screenWidth(context) / 1.2,
@@ -46,27 +49,15 @@ class AppDrawer extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star_rounded,
-                          size: 25,
-                          color: Colors.grey,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          "Favourite location",
-                          style: AppStyles.bodyMediumL
-                              .copyWith(color: Colors.grey),
-                        ),
-                      ],
-                    ),
+                    titleRow(Icons.star_rounded, "Favourite location"),
                     const SizedBox(height: 10),
                     DrawerLocationWidget(
                       icon: Icons.location_pin,
-                      locationName: currentWeather!.location!.name!,
-                      imageUrl: currentWeather.current!.condition!.icon,
-                      temp: currentWeather.current!.tempC!.toInt().toString(),
+                      locationName: firstCurrentWeather.location!.name!,
+                      imageUrl: firstCurrentWeather.current!.condition!.icon,
+                      temp: firstCurrentWeather.current!.tempC!
+                          .toInt()
+                          .toString(),
                       onTap: () {
                         Get.back();
                         Get.toNamed(AppRoutes.locations);
@@ -75,26 +66,31 @@ class AppDrawer extends StatelessWidget {
                     const SizedBox(height: 10),
                     const Divider(),
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.add_location_alt_rounded,
-                          size: 25,
-                          color: Colors.grey,
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          "Other locations",
-                          style: AppStyles.bodyMediumXL
-                              .copyWith(color: Colors.grey),
-                        ),
-                      ],
-                    ),
+                    titleRow(Icons.add_location, "Other locations"),
                     const SizedBox(height: 10),
-                    DrawerLocationWidget(
-                      locationName: currentWeather.location!.name!,
-                      imageUrl: currentWeather.current!.condition!.icon,
-                      temp: currentWeather.current!.tempC!.toInt().toString(),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: controller.weathers.length,
+                        itemBuilder: (context, index) => DrawerLocationWidget(
+                          locationName:
+                              weathers[index].currentWeather.location!.name!,
+                          imageUrl: weathers[index]
+                              .currentWeather
+                              .current!
+                              .condition!
+                              .icon,
+                          temp: weathers[index]
+                              .currentWeather
+                              .current!
+                              .tempC!
+                              .toInt()
+                              .toString(),
+                          onTap: () {
+                            Get.back();
+                            Get.toNamed(AppRoutes.settings);
+                          },
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 30),
                     MaterialButton(
@@ -118,6 +114,23 @@ class AppDrawer extends StatelessWidget {
                 ),
         ),
       ),
+    );
+  }
+
+  Row titleRow(IconData icon, String title) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 25,
+          color: Colors.grey,
+        ),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: AppStyles.bodyMediumL.copyWith(color: Colors.grey),
+        ),
+      ],
     );
   }
 }

@@ -60,7 +60,7 @@ class SettingsView extends StatelessWidget {
                       property: "Auto refresh",
                       value: "Every ${controller.refreshTime.inHours} hours",
                       options: (context) => [
-                        PopupMenuItem(
+                        const PopupMenuItem(
                           child: Text("Never"),
                         ),
                         PopupMenuItem(

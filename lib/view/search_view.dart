@@ -40,12 +40,39 @@ class SearchView extends StatelessWidget {
                       );
                     } else if (controller.searchStatus.value ==
                         ApiResponse.offline) {
-                      return Lottie.asset('assets/lottie/offline.json');
+                      return Column(
+                        children: [
+                          Lottie.asset('assets/lottie/offline.json'),
+                          Text(
+                            "No internet connection!",
+                            style: AppStyles.bodyRegularXL
+                                .copyWith(color: Colors.grey),
+                          )
+                        ],
+                      );
                     } else if (controller.searchStatus.value ==
                         ApiResponse.loading) {
-                      return Lottie.asset('assets/lottie/loading.json');
+                      return Column(
+                        children: [
+                          Lottie.asset('assets/lottie/loading.json'),
+                          Text(
+                            "Loading...",
+                            style: AppStyles.bodyRegularXL
+                                .copyWith(color: Colors.grey),
+                          )
+                        ],
+                      );
                     } else {
-                      return Lottie.asset('assets/lottie/search.json');
+                      return Column(
+                        children: [
+                          Lottie.asset('assets/lottie/search.json'),
+                          Text(
+                            "Enter a location name",
+                            style: AppStyles.bodyRegularXL
+                                .copyWith(color: Colors.grey),
+                          )
+                        ],
+                      );
                     }
                   })
                 ],
