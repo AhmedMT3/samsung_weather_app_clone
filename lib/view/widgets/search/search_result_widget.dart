@@ -31,8 +31,8 @@ class SearchResultWidget extends StatelessWidget {
         shrinkWrap: true,
         itemCount: searchedLocations.length,
         itemBuilder: (context, index) => InkWell(
-          onTap: () =>
-              controller.selectLocation(searchedLocations[index].name!),
+          onTap: () => controller.selectLocation(
+              "${searchedLocations[index].name} ${searchedLocations[index].region}"),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

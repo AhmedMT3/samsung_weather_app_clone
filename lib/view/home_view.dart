@@ -35,30 +35,28 @@ class HomeView extends StatelessWidget {
                         children: [
                           const SizedBox(height: 20),
                           CurrentWeatherWidget(
-                            location: controller
-                                .weathers.first.currentWeather.location!,
-                            current: controller
-                                .weathers.first.currentWeather.current!,
-                            day: controller.weathers.first.forecastWeather
-                                .forecast!.forecastday!.first.day!,
+                            location: controller.weathers.first.location!,
+                            current: controller.weathers.first.current!,
+                            day: controller.weathers.first.forecast!
+                                .forecastday!.first.day!,
                           ),
                           const SizedBox(height: 30),
                           HourlyForcast(
-                            hours: controller.weathers.first.forecastWeather
-                                .forecast!.forecastday!.first.hour!,
-                            day: controller.weathers.first.forecastWeather
-                                .forecast!.forecastday!.first.day!,
+                            hours: controller.weathers.first.forecast!
+                                .forecastday!.first.hour!,
+                            day: controller.weathers.first.forecast!
+                                .forecastday!.first.day!,
                           ),
                           const SizedBox(height: 10),
                           OutlookWidget(
                             controller: controller,
-                            astro: controller.weathers.first.forecastWeather
-                                .forecast!.forecastday!.first.astro!,
+                            astro: controller.weathers.first.forecast!
+                                .forecastday!.first.astro!,
                           ),
                           const SizedBox(height: 10),
                           DailyForcast(
-                            forecastday: controller.weathers.first
-                                .forecastWeather.forecast!.forecastday!,
+                            forecastday: controller
+                                .weathers.first.forecast!.forecastday!,
                           ),
                           const SizedBox(height: 10),
                           Row(
@@ -67,15 +65,14 @@ class HomeView extends StatelessWidget {
                                 svg: "uv.svg",
                                 name: "UV index",
                                 value: AppHelpers.getUVIndexDescription(
-                                    controller.weathers.first.currentWeather
-                                        .current!.uv!),
+                                    controller.weathers.first.current!.uv!),
                               ),
                               const SizedBox(width: 10),
                               PropertyWidget(
                                 svg: "water.svg",
                                 name: "Humidity",
                                 value:
-                                    "${controller.weathers.first.currentWeather.current!.humidity}%",
+                                    "${controller.weathers.first.current!.humidity}%",
                               ),
                             ],
                           ),
@@ -86,7 +83,7 @@ class HomeView extends StatelessWidget {
                                 svg: "wind.svg",
                                 name: "Wind",
                                 value:
-                                    " ${controller.weathers.first.currentWeather.current!.windKph!.toInt()} km/h",
+                                    " ${controller.weathers.first.current!.windKph!.toInt()} km/h",
                               ),
                               const SizedBox(width: 10),
                               DoublePropertyWidget(
@@ -94,24 +91,10 @@ class HomeView extends StatelessWidget {
                                 svg2: "sunset.svg",
                                 name1: "Sunrise",
                                 name2: "Sunset",
-                                value1: controller
-                                    .weathers
-                                    .first
-                                    .forecastWeather
-                                    .forecast!
-                                    .forecastday!
-                                    .first
-                                    .astro!
-                                    .sunrise!,
-                                value2: controller
-                                    .weathers
-                                    .first
-                                    .forecastWeather
-                                    .forecast!
-                                    .forecastday!
-                                    .first
-                                    .astro!
-                                    .sunset!,
+                                value1: controller.weathers.first.forecast!
+                                    .forecastday!.first.astro!.sunrise!,
+                                value2: controller.weathers.first.forecast!
+                                    .forecastday!.first.astro!.sunset!,
                               )
                             ],
                           )

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -6,7 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/core/config/app_routes.dart';
 import 'package:weather_app/core/themes/app_styles.dart';
-import 'package:weather_app/model/current_weather.dart';
+import 'package:weather_app/core/themes/app_themes.dart';
 import 'package:weather_app/model/weather.dart';
 import 'package:weather_app/util/helpers/app_helpers.dart';
 import 'package:weather_app/view/widgets/drawer/drawer_location_widget.dart';
@@ -20,9 +19,8 @@ class AppDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CurrentWeather firstCurrentWeather =
-        controller.weathers.first.currentWeather;
-    final RxList<Weather> weathers = controller.weathers;
+    final Weather firstWeather = controller.weathers.first;
+    final List<Weather> tempWeathers = controller.weathers.sublist(1);
 
     return Drawer(
       width: AppHelpers.screenWidth(context) / 1.2,
@@ -49,50 +47,41 @@ class AppDrawer extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    titleRow(Icons.star_rounded, "Favourite location"),
+                    titleRow(context, Icons.star_rounded, "Favourite location"),
                     const SizedBox(height: 10),
                     DrawerLocationWidget(
                       icon: Icons.location_pin,
-                      locationName: firstCurrentWeather.location!.name!,
-                      imageUrl: firstCurrentWeather.current!.condition!.icon,
-                      temp: firstCurrentWeather.current!.tempC!
-                          .toInt()
-                          .toString(),
+                      locationName: firstWeather.location!.name!,
+                      imageUrl: firstWeather.current!.condition!.icon,
+                      temp: firstWeather.current!.tempC!.toInt().toString(),
                       onTap: () {
                         Get.back();
                         Get.toNamed(AppRoutes.locations);
                       },
                     ),
                     const SizedBox(height: 10),
-                    const Divider(),
-                    const SizedBox(height: 10),
-                    titleRow(Icons.add_location, "Other locations"),
+                    customDivider(context),
+                    const SizedBox(height: 17),
+                    titleRow(context, Icons.add_location_outlined,
+                        "Other locations"),
                     const SizedBox(height: 10),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: controller.weathers.length,
+                        itemCount: tempWeathers.length,
                         itemBuilder: (context, index) => DrawerLocationWidget(
-                          locationName:
-                              weathers[index].currentWeather.location!.name!,
-                          imageUrl: weathers[index]
-                              .currentWeather
-                              .current!
-                              .condition!
-                              .icon,
-                          temp: weathers[index]
-                              .currentWeather
-                              .current!
-                              .tempC!
-                              .toInt()
-                              .toString(),
+                          locationName: tempWeathers[index].location!.name!,
+                          imageUrl:
+                              tempWeathers[index].current!.condition!.icon,
+                          temp:
+                              "${tempWeathers[index].current!.tempC!.toInt()}",
                           onTap: () {
+                            controller.onReorder(index + 1, 0);
                             Get.back();
-                            Get.toNamed(AppRoutes.settings);
+                            Get.toNamed(AppRoutes.home);
                           },
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30),
                     MaterialButton(
                       onPressed: () {
                         Get.back();
@@ -109,7 +98,9 @@ class AppDrawer extends StatelessWidget {
                         "Manage locations",
                         style: AppStyles.bodyMediumL,
                       ),
-                    )
+                    ),
+                    const SizedBox(height: 10),
+                    customDivider(context),
                   ],
                 ),
         ),
@@ -117,7 +108,11 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  Row titleRow(IconData icon, String title) {
+  Row titleRow(
+    BuildContext ctx,
+    IconData icon,
+    String title,
+  ) {
     return Row(
       children: [
         Icon(
@@ -128,9 +123,27 @@ class AppDrawer extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           title,
-          style: AppStyles.bodyMediumL.copyWith(color: Colors.grey),
+          style: Theme.of(ctx).textTheme.titleMedium,
         ),
       ],
+    );
+  }
+
+  Row customDivider(BuildContext ctx) {
+    return Row(
+      children: List.generate(
+        AppHelpers.screenWidth(ctx) ~/ 4,
+        (index) => Expanded(
+          child: Container(
+            width: 2,
+            height: 2,
+            decoration: BoxDecoration(
+              color: index % 2 == 0 ? Colors.transparent : Colors.grey,
+              borderRadius: BorderRadius.circular(30),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

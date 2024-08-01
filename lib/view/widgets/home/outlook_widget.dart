@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/core/themes/app_styles.dart';
-import 'package:weather_app/model/forecast.dart';
+import 'package:weather_app/model/weather.dart';
 
 class OutlookWidget extends StatelessWidget {
   const OutlookWidget({

@@ -23,6 +23,7 @@ class SearchView extends StatelessWidget {
               child: Column(
                 children: [
                   SearchBar(
+                    autoFocus: true,
                     padding: const WidgetStatePropertyAll(
                       EdgeInsets.symmetric(horizontal: 15),
                     ),

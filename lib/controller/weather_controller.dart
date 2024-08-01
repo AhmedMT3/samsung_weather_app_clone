@@ -8,8 +8,6 @@ import 'package:weather_app/controller/settings_controller.dart';
 import 'package:weather_app/core/config/app_routes.dart';
 import 'package:weather_app/core/themes/app_themes.dart';
 import 'package:weather_app/model/api_response.dart';
-import 'package:weather_app/model/current_weather.dart';
-import 'package:weather_app/model/forecast.dart';
 import 'package:weather_app/model/search_location.dart';
 import 'package:weather_app/model/weather.dart';
 import 'package:weather_app/util/services/api_services.dart';
@@ -19,7 +17,6 @@ class WeatherController extends GetxController {
   final GetStorage box = GetStorage();
   String location = "Paris";
   RxBool isLoading = false.obs;
-
   PageController outlookPageController = PageController();
   int currOutlookPage = 0;
   late ApiResponse responseStatus;
@@ -46,11 +43,8 @@ class WeatherController extends GetxController {
       Map<String, dynamic> jsonResponse = response.getOrElse(() => {});
       // log("Response: ${jsonResponse.toString()}");
 
-      weathers.add(Weather(
-        currentWeather: CurrentWeather.fromJson(jsonResponse),
-        forecastWeather: ForecastWeather.fromJson(jsonResponse),
-      ));
-      box.write('location', location);
+      weathers.add(Weather.fromJson(jsonResponse));
+      saveWeatherData(location, weathers);
       this.location = location;
     } else {
       responseStatus = response.fold((l) => l, (r) => ApiResponse.unknownErr);
@@ -58,6 +52,18 @@ class WeatherController extends GetxController {
     }
     isLoading(false);
     update();
+  }
+
+  /*
+  ===========================================================
+  ====================[ Save Weather Data ]==================
+  ===========================================================
+  */
+  void saveWeatherData(String location, List<Weather> weathers) {
+    box.write('location', location);
+    List<Map<String, dynamic>> weatherList =
+        weathers.map((weather) => weather.toJson()).toList();
+    box.write('weathers', weatherList);
   }
 
   /*
@@ -94,15 +100,18 @@ class WeatherController extends GetxController {
     searchStatus.value = ApiResponse.unknownErr;
     updateBackgrounColor();
     Get.toNamed(AppRoutes.home);
-    log("Weathers Lenght: ${weathers.length}");
+    log("Weathers count = ${weathers.length}");
     update();
   }
 
   Future<void> refreshWeather() async {
-    final String loc = weathers.first.currentWeather.location!.name!;
-    await getWeatherData(loc);
+    final String name = weathers.first.location!.name!;
+    final String region = weathers.first.location!.region!;
+    await getWeatherData("$name $region");
+
     weathers.first = weathers.last;
     weathers.removeLast();
+
     updateBackgrounColor();
     update();
   }
@@ -113,7 +122,7 @@ class WeatherController extends GetxController {
   }
 
   void updateBackgrounColor() {
-    if (weathers.first.currentWeather.current!.isDay == 1) {
+    if (weathers.first.current!.isDay == 1) {
       backgroundColor = AppThemes.dayBackground;
     } else {
       backgroundColor = AppThemes.nightBackground;
@@ -140,10 +149,18 @@ class WeatherController extends GetxController {
   void onInit() async {
     isLoading(true);
     location = box.read('location') ?? location;
-    await getWeatherData(location);
+    List<dynamic>? savedWeatherList =
+        box.read<List<dynamic>>('weathers');
+    if (savedWeatherList != null) {
+      weathers.value =
+          savedWeatherList.map((json) => Weather.fromJson(json)).toList();
+    } else {
+      await getWeatherData(location);
+    }
     updateBackgrounColor();
     timer =
         Timer.periodic(settingsController.refreshTime, (t) => _autoRefresh());
+    isLoading(false);
     super.onInit();
   }
 }

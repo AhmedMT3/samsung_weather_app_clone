@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:weather_app/controller/settings_controller.dart';
+import 'package:weather_app/core/themes/app_styles.dart';
+import 'package:weather_app/view/widgets/settings/popup_options.dart';
 import 'package:weather_app/view/widgets/settings/popup_settings_menu_item.dart';
 
 class SettingsView extends StatelessWidget {
@@ -19,74 +21,74 @@ class SettingsView extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: GetBuilder<SettingsController>(
             builder: (controller) => SingleChildScrollView(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFF212121),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Column(
-                  children: [
-                    PopupSettingsMenuItem(
-                      isTop: true,
-                      property: "Unit",
-                      value: "˚${controller.unit}",
-                      options: (context) => [
-                        PopupMenuItem(
-                          onTap: () => controller.setUnit('C'),
-                          child: const Text("C˚"),
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF212121),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      children: [
+                        PopupSettingsMenuItem(
+                          isTop: true,
+                          property: "Unit",
+                          value: "˚${controller.unit}",
+                          options: (context) => PopupOptions.unit(controller),
                         ),
-                        PopupMenuItem(
-                          onTap: () => controller.setUnit('F'),
-                          child: const Text("F˚"),
+                        myDivider(),
+                        PopupSettingsMenuItem(
+                          property: "Local Weather",
+                          value: "Agree",
+                          options: (context) => PopupOptions.localWeather(),
+                        ),
+                        myDivider(),
+                        PopupSettingsMenuItem(
+                          isBottom: true,
+                          property: "Auto refresh",
+                          value:
+                              "Every ${controller.refreshTime.inHours} hours",
+                          options: (context) =>
+                              PopupOptions.autoRefresh(controller),
                         ),
                       ],
                     ),
-                    myDivider(),
-                    PopupSettingsMenuItem(
-                      property: "Local Weather",
-                      value: "Agree",
-                      options: (context) => const [
-                        PopupMenuItem(
-                          child: Text("Agree"),
+                  ),
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF212121),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Theme",
+                              style: AppStyles.bodyMediumXL,
+                            ),
+                            Text(
+                              controller.isDarkTheme
+                                  ? 'Light mode'
+                                  : 'Dark mode',
+                              style: AppStyles.bodyRegularL
+                                  .copyWith(color: Colors.blue),
+                            ),
+                          ],
                         ),
-                        PopupMenuItem(
-                          child: Text("Disagree"),
-                        ),
+                        Switch(
+                          value: controller.isDarkTheme,
+                          onChanged: (val) => controller.swithTheme(val),
+                        )
                       ],
                     ),
-                    myDivider(),
-                    PopupSettingsMenuItem(
-                      isBottom: true,
-                      property: "Auto refresh",
-                      value: "Every ${controller.refreshTime.inHours} hours",
-                      options: (context) => [
-                        const PopupMenuItem(
-                          child: Text("Never"),
-                        ),
-                        PopupMenuItem(
-                          onTap: () => controller.setRefreshTime(1),
-                          child: const Text("Every 1 hour"),
-                        ),
-                        PopupMenuItem(
-                          onTap: () => controller.setRefreshTime(3),
-                          child: const Text("Every 3 hour"),
-                        ),
-                        PopupMenuItem(
-                          onTap: () => controller.setRefreshTime(6),
-                          child: const Text("Every 6 hour"),
-                        ),
-                        PopupMenuItem(
-                          onTap: () => controller.setRefreshTime(12),
-                          child: const Text("Every 12 hour"),
-                        ),
-                        PopupMenuItem(
-                          onTap: () => controller.setRefreshTime(24),
-                          child: const Text("Every 24 hour"),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
           ),

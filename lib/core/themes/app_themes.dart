@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppThemes {
-  static ThemeData darkTheme = ThemeData(
+  static ThemeData darkTheme = ThemeData.dark().copyWith(
     brightness: Brightness.dark,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
@@ -12,12 +12,17 @@ class AppThemes {
       ),
     ),
   );
-  static ThemeData lightTheme = ThemeData(
-    brightness: Brightness.dark,
+  static ThemeData lightTheme = ThemeData.light().copyWith(
+    brightness: Brightness.light,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,
     ),
     textTheme: const TextTheme(
+      titleMedium: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: Colors.black,
+      ),
       displayLarge: TextStyle(
         fontSize: 90,
       ),

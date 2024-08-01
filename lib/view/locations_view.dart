@@ -61,15 +61,10 @@ class ManageLocationsView extends StatelessWidget {
                                   ),
                                 LocationWidget(
                                   key: Key(index.toString()),
-                                  currentWeather:
-                                      controller.weathers[index].currentWeather,
-                                  day: controller
-                                      .weathers[index]
-                                      .forecastWeather
-                                      .forecast!
-                                      .forecastday!
-                                      .first
-                                      .day!,
+                                  weather:
+                                      controller.weathers[index],
+                                  day: controller.weathers[index].forecast!
+                                      .forecastday!.first.day!,
                                 ),
                                 SizedBox(
                                   key: Key("$index+SizedBox"),

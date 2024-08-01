@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:weather_app/controller/settings_controller.dart';
 import 'package:weather_app/core/themes/app_styles.dart';
 import 'package:weather_app/core/themes/app_themes.dart';
+import 'package:weather_app/model/weather.dart';
 
-import 'package:weather_app/model/forecast.dart';
 
 class HourlyForcast extends StatelessWidget {
   const HourlyForcast({
