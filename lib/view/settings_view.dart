@@ -73,16 +73,16 @@ class SettingsView extends StatelessWidget {
                               style: AppStyles.bodyMediumXL,
                             ),
                             Text(
-                              controller.isDarkTheme
-                                  ? 'Light mode'
-                                  : 'Dark mode',
+                              controller.isDarkMode
+                                  ? 'Dark mode'
+                                  : 'Light mode',
                               style: AppStyles.bodyRegularL
                                   .copyWith(color: Colors.blue),
                             ),
                           ],
                         ),
                         Switch(
-                          value: controller.isDarkTheme,
+                          value: controller.isDarkMode,
                           onChanged: (val) => controller.swithTheme(val),
                         )
                       ],

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_app/core/themes/app_styles.dart';
 
 class AppHelpers {
   static double screenWidth(BuildContext ctx) => MediaQuery.of(ctx).size.width;
@@ -52,6 +53,7 @@ class AppHelpers {
     }
   }
 
+  /// Checks internet connection, Returns [true] if online, [false] if offline
   static Future<bool> checkInternet() async {
     try {
       var result = await InternetAddress.lookup('google.com');
@@ -63,5 +65,80 @@ class AppHelpers {
     } on SocketException catch (_) {
       return false;
     }
+  }
+
+  /// The default dialog for the app
+  static Future showDialog({
+    required String title,
+    required String message,
+    required String cancelButtonText,
+    required String confirmButtonText,
+    required void Function()? onPressCancel,
+    required void Function()? onPressConfirm,
+  }) async {
+    return await Get.dialog(
+      AlertDialog(
+        title: Text(title),
+        titleTextStyle: AppStyles.bodyMediumXL,
+        content: Text(message),
+        contentTextStyle:
+            AppStyles.bodyRegularL.copyWith(color: Colors.grey[400]),
+        actions: [
+          MaterialButton(
+            onPressed: onPressCancel,
+            child: Text(cancelButtonText),
+          ),
+          MaterialButton(
+            onPressed: onPressConfirm,
+            color: Colors.blue.shade700,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(confirmButtonText),
+          )
+        ],
+      ),
+      barrierDismissible: false,
+    );
+  }
+
+  /// Dialog for offline case
+  static Future showOffLineDialog(
+      {required void Function()? cancelFunction,
+      required void Function()? confirmFunction}) {
+    return AppHelpers.showDialog(
+      title: "No Internet connection",
+      message: "Make sure you have stable internet connection and try again.",
+      cancelButtonText: "Discard",
+      confirmButtonText: "Try again",
+      onPressCancel: cancelFunction,
+      onPressConfirm: confirmFunction,
+    );
+  }
+  /// \nDialog for Not-enabled location service case
+  static Future notEnabledDialog(
+      {required void Function()? cancelFunction,
+      required void Function()? confirmFunction}) {
+    return AppHelpers.showDialog(
+      title: "Location services not enabled",
+      message: "Make sure to enable location service on your phone and try again.",
+      cancelButtonText: "Discard",
+      confirmButtonText: "Try again",
+      onPressCancel: cancelFunction,
+      onPressConfirm: confirmFunction,
+    );
+  }
+  /// \nDialog for Denied location service case
+  static Future deniedDialog(
+      {required void Function()? cancelFunction,
+      required void Function()? confirmFunction}) {
+    return AppHelpers.showDialog(
+      title: "Location services denied",
+      message: "Make sure to allow location access for this app from app settings.",
+      cancelButtonText: "Discard",
+      confirmButtonText: "Allow",
+      onPressCancel: cancelFunction,
+      onPressConfirm: confirmFunction,
+    );
   }
 }

@@ -20,11 +20,12 @@ dependencies:
   flutter_svg: ^2.0.10+1
   dartz: ^0.10.1
   get_storage: ^2.1.1
+  location: ^7.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^4.0.0
 
 flutter:
 

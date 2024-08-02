@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/core/config/app_config.dart';
-import 'package:weather_app/model/api_response.dart';
+import 'package:weather_app/model/enums.dart';
 import 'package:weather_app/util/helpers/app_helpers.dart';
 
 class ApiServices {
