@@ -17,14 +17,14 @@ class DailyForcast extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SettingsController>(
       builder: (controller) => Container(
-        height: 230,
         padding: const EdgeInsets.all(13),
         width: double.infinity,
         decoration: BoxDecoration(
             color: const Color(0xC919346B),
             borderRadius: BorderRadius.circular(12)),
         child: ListView.builder(
-          // physics: const NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
           itemCount: forecastday.length,
           itemBuilder: (context, index) => Column(
             mainAxisSize: MainAxisSize.min,

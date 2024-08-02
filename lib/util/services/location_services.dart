@@ -4,7 +4,7 @@ import 'package:weather_app/model/enums.dart';
 import 'package:weather_app/util/helpers/app_helpers.dart';
 
 class LocationServices {
-  // Get device location function
+  /// Get device location function
   Future<Either<LocationError, LocationData>> getLocation() async {
     bool isOnline = await AppHelpers.checkInternet();
 
