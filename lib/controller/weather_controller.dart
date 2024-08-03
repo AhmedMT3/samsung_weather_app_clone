@@ -23,7 +23,6 @@ class WeatherController extends GetxController {
   final GetStorage box = GetStorage();
   String location = "Paris";
   RxBool isLoading = false.obs;
-  PageController outlookPageController = PageController();
   int currOutlookPage = 0;
   late ApiResponse responseStatus;
   Rx<ApiResponse> searchStatus = ApiResponse.unknownErr.obs;
@@ -32,7 +31,6 @@ class WeatherController extends GetxController {
   Timer? timer;
   RxList<Weather> weathers = <Weather>[].obs;
   RxList<SearchLocation> searchedLocations = <SearchLocation>[].obs;
-  int refreshCount = 0;
 
   /// ## Get weather data from API
   /// Perform `GET` request with end Point the [query].
@@ -59,15 +57,7 @@ class WeatherController extends GetxController {
       //On Error
       responseStatus = response.fold((l) => l, (r) => ApiResponse.unknownErr);
       log(responseStatus.toString());
-      if (responseStatus == ApiResponse.offline) {
-        await AppHelpers.showOffLineDialog(
-            cancelFunction: Get.back,
-            confirmFunction: () async {
-              Get.back();
-              await Future.delayed(const Duration(seconds: 2));
-              await getWeatherData(query);
-            });
-      }
+      await _handelGetWeatherError(responseStatus);
     }
     isLoading(false);
     update();
@@ -138,7 +128,7 @@ class WeatherController extends GetxController {
       final String lat = right.latitude!.toString();
       final String lon = right.longitude!.toString();
       location = "$lat,$lon";
-      log("Location before sending to api: $location");
+      log("Location sent to api: $location");
       await getWeatherData(location);
     });
   }
@@ -148,15 +138,11 @@ class WeatherController extends GetxController {
   /// stored weather on `weathers` list or not, and compare the new location
   /// with the first weather location. If `true`
   Future<void> refreshWeather() async {
-    if (refreshCount < 3) {
-      await getWeatherData(location);
-      refreshCount++;
-    } else {
-      await getUserLocation();
-      refreshCount = 0;
-    }
-    log("Refresh count = $refreshCount");
-    log("Stored location from api: ${weathers.first.location!.lat}, ${weathers.first.location!.lon}");
+    final String favLoc =
+        "${weathers.first.location!.name} ${weathers.first.location!.region}";
+    await getWeatherData(favLoc);
+
+    log("Location from api: ${weathers.first.location!.lat}, ${weathers.first.location!.lon}");
     updateBackgrounColor();
     update();
   }
@@ -167,23 +153,15 @@ class WeatherController extends GetxController {
   /// if `newLoc` is true, insert the new added location at the top (to be favourite)
   /// and remove it from the buttom of the list.
   void _updateWeathersList({bool newLoc = false}) {
-    if (newLoc) {
-      if (weathers.length > 1) {
+    if (weathers.length > 1) {
+      if (newLoc) {
         weathers.insert(0, weathers.last);
         weathers.removeLast();
-      }
-    } else {
-      if (weathers.length > 1) {
+      } else {
         weathers.first = weathers.last;
         weathers.removeLast();
       }
     }
-  }
-
-  /// Updates the counter index for pageView in *outlook_widget*
-  void onOutlookPageChange(index) {
-    currOutlookPage = index;
-    update();
   }
 
   /// Updates the *home_view* Scaffold backgroundColor
@@ -196,24 +174,28 @@ class WeatherController extends GetxController {
     }
   }
 
-  /// Calls [refreshWeather] function every [timer] value
-  void _autoRefresh() {
-    if (settingsController.refreshTime.inHours != 0) {
-      refreshWeather();
-      log("Auto Refreshed at ${DateTime.now()}");
-    }
-  }
-
   /// Swap the [weathers] Item from [oldIndex] to [newIndex]
   /// Then call [refreshWeather] to update data.
   /// Called in **locations_view** and **app_drawer**
-  void onReorder(int oldIndex, int newIndex) {
+  void onReorder(int oldIndex, int newIndex) async {
     if (oldIndex < newIndex) newIndex--;
     final Weather tempWeather = weathers.removeAt(oldIndex);
     weathers.insert(newIndex, tempWeather);
 
-    refreshWeather();
-    update();
+    await refreshWeather();
+  }
+
+  /// Shows a Toast message for each [ApiResponse] error.
+  Future<bool?> _handelGetWeatherError(ApiResponse error) {
+    if (error == ApiResponse.offline) {
+      return AppHelpers.showToast("No network connection");
+    } else if (error == ApiResponse.wrongLocation) {
+      return AppHelpers.showToast("Wrong location");
+    } else if (error == ApiResponse.serverErr) {
+      return AppHelpers.showToast("Server error, please try again");
+    } else {
+      return AppHelpers.showToast("Unknown error occured.");
+    }
   }
 
   /// Shows an AlertDialog for each [LocationError]
@@ -236,19 +218,32 @@ class WeatherController extends GetxController {
     }
   }
 
+  /// Calls [refreshWeather] function every [timer] value
+  void _autoRefresh() async {
+    if (settingsController.refreshTime.inHours != 0) {
+      await refreshWeather();
+      log("Auto Refreshed at ${DateTime.now()}");
+    }
+  }
+
+  /// Updates the counter index for pageView in *outlook_widget*
+  void onOutlookPageChange(index) {
+    currOutlookPage = index;
+    update();
+  }
+
   @override
   void onInit() async {
     isLoading(true);
     location = box.read<String>('location') ?? location;
     List<dynamic>? savedWeatherList = box.read<List<dynamic>>('weathers');
     if (savedWeatherList != null) {
-      log("Weather before: $weathers");
       weathers.value =
           savedWeatherList.map((json) => Weather.fromJson(json)).toList();
-      await refreshWeather();
-    } else {
-      await getUserLocation();
+      log("Weathers Stored on box: ${weathers.length}");
     }
+    await getUserLocation();
+    updateBackgrounColor();
     // Start timer
     timer =
         Timer.periodic(settingsController.refreshTime, (t) => _autoRefresh());
@@ -260,7 +255,6 @@ class WeatherController extends GetxController {
   void onClose() async {
     await box.remove('weathers');
     weathers.clear();
-    outlookPageController.dispose();
     super.onClose();
   }
 }

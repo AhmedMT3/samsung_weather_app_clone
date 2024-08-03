@@ -21,6 +21,7 @@ dependencies:
   dartz: ^0.10.1
   get_storage: ^2.1.1
   location: ^7.0.0
+  fluttertoast: ^8.2.6
 
 dev_dependencies:
   flutter_test:

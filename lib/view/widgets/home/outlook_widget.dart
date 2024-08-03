@@ -27,7 +27,6 @@ class OutlookWidget extends StatelessWidget {
             height: 50,
             child: PageView.builder(
               itemCount: astroInfo(astro: astro).length,
-              controller: controller.outlookPageController,
               onPageChanged: (index) => controller.onOutlookPageChange(index),
               itemBuilder: (context, index) => astroInfo(astro: astro)[index],
             ),

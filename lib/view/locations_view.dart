@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -6,7 +8,7 @@ import 'package:weather_app/core/config/app_routes.dart';
 import 'package:weather_app/core/themes/app_styles.dart';
 import 'package:weather_app/view/widgets/manage_locations/location_widget.dart';
 
-class ManageLocationsView extends StatelessWidget {
+class ManageLocationsView extends GetView<WeatherController> {
   const ManageLocationsView({super.key});
 
   @override
@@ -31,52 +33,51 @@ class ManageLocationsView extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: GetBuilder<WeatherController>(
-            builder: (controller) => Column(
-              children: [
-                Obx(
-                  () => controller.weathers.isEmpty
-                      ? Lottie.asset("assets/lottie/loading.json")
-                      : Expanded(
-                          child: ReorderableListView.builder(
-                            onReorder: (oldIndex, newIndex) =>
-                                controller.onReorder(oldIndex, newIndex),
-                            itemCount: controller.weathers.length,
-                            header: titleRow(
-                              null,
-                              Icons.star_rounded,
-                              "Favourite location",
-                            ),
-                            itemBuilder: (context, index) => Column(
-                              key: Key("$index+Col"),
-                              children: [
-                                if (index == 1)
-                                  GestureDetector(
-                                    onLongPress: () {},
-                                    child: titleRow(
-                                      ValueKey("$index+title"),
-                                      Icons.add_location,
-                                      "Other locations",
-                                    ),
+          child: Column(
+            children: [
+              Obx(
+                () => controller.weathers.isEmpty
+                    ? Lottie.asset("assets/lottie/loading.json")
+                    : Expanded(
+                        child: ReorderableListView.builder(
+                          onReorder: (oldIndex, newIndex) =>
+                              controller.onReorder(oldIndex, newIndex),
+                          itemCount: controller.weathers.length,
+                          header: titleRow(
+                            null,
+                            Icons.star_rounded,
+                            "Favourite location",
+                          ),
+                          itemBuilder: (context, index) => Column(
+                            key: Key("$index+Col"),
+                            children: [
+                              if (index == 1)
+                                GestureDetector(
+                                  onHorizontalDragUpdate: (details) =>
+                                      log("${details.globalPosition}"),
+                                  onLongPress: () {},
+                                  child: titleRow(
+                                    ValueKey("$index+title"),
+                                    Icons.add_location,
+                                    "Other locations",
                                   ),
-                                LocationWidget(
-                                  key: Key(index.toString()),
-                                  weather:
-                                      controller.weathers[index],
-                                  day: controller.weathers[index].forecast!
-                                      .forecastday!.first.day!,
                                 ),
-                                SizedBox(
-                                  key: Key("$index+SizedBox"),
-                                  height: 10,
-                                )
-                              ],
-                            ),
+                              LocationWidget(
+                                key: Key(index.toString()),
+                                weather: controller.weathers[index],
+                                day: controller.weathers[index].forecast!
+                                    .forecastday!.first.day!,
+                              ),
+                              SizedBox(
+                                key: Key("$index+SizedBox"),
+                                height: 10,
+                              )
+                            ],
                           ),
                         ),
-                )
-              ],
-            ),
+                      ),
+              )
+            ],
           ),
         ),
       ),
