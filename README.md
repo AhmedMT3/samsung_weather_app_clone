@@ -1,6 +1,6 @@
-# Weather app
+# Samsung weather app clone
 
-Samsung weather app clone with Flutter using free weatherapi.com
+Samsung weather app clone is a Flutter app using free weatherapi.com
 
 ## Features
 Weather app providing all of these features:
@@ -16,7 +16,7 @@ Weather app powered by free weather API from [weatherapi.com](https://www.weathe
 
 <br>
 
-## Screenshots
+## Screenshots 📸
 
 <div style="display: flex;">
   <img src="assets/screenshots/home.png" alt="Cairo Weather Screenshot" height="400" style="margin-right: 30px;">
@@ -47,6 +47,10 @@ You can read more about each package on [pub.dev](https://www.pub.dev)
 - `font_awesome_flutter`: ^10.7.0
 - `lottie`: ^3.1.2
 - `flutter_svg`: ^2.0.10+1
+- `dartz`: ^0.10.1
+- `get_storage`: ^2.1.1
+- `location`: ^7.0.0
+- `fluttertoast`: ^8.2.6
 
 ## Usage
 1. Clone this repository. Or [Download ZIP file 📁](https://github.com/ahmedmt3/weather_app/archive/refs/heads/main.zip)
