@@ -46,7 +46,7 @@ class DrawerLocationWidget extends StatelessWidget {
                 Image.network(
                   "https:$imageUrl",
                   errorBuilder: (context, error, stackTrace) =>
-                      const Text("No internet!"),
+                      const Icon(Icons.wifi_off),
                   scale: 2,
                 ),
               const SizedBox(width: 10),

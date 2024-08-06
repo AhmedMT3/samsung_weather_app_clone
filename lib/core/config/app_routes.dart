@@ -17,7 +17,7 @@ class AppRoutes {
     ),
     GetPage(
       name: locations,
-      page: () => const ManageLocationsView(),
+      page: () => const LocationsView(),
     ),
     GetPage(
       name: settings,

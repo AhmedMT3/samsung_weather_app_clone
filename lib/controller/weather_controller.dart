@@ -31,6 +31,7 @@ class WeatherController extends GetxController {
   Timer? timer;
   RxList<Weather> weathers = <Weather>[].obs;
   RxList<SearchLocation> searchedLocations = <SearchLocation>[].obs;
+  List<int> selectedLocations = <int>[];
 
   /// ## Get weather data from API
   /// Perform `GET` request with end Point the [query].
@@ -128,7 +129,6 @@ class WeatherController extends GetxController {
       final String lat = right.latitude!.toString();
       final String lon = right.longitude!.toString();
       location = "$lat,$lon";
-      log("Location sent to api: $location");
       await getWeatherData(location);
     });
   }
@@ -230,6 +230,38 @@ class WeatherController extends GetxController {
   void onOutlookPageChange(index) {
     currOutlookPage = index;
     update();
+  }
+
+  onLongPressLocation(int index) {
+    if (!selectedLocations.contains(index)) {
+      selectedLocations.add(index);
+    }
+    update();
+  }
+
+  onTapLocation(int index) {
+    if (selectedLocations.contains(index)) {
+      selectedLocations.removeWhere((item) => item == index);
+    }
+    update();
+  }
+
+  /// Delete a location weather from [weathers] list.
+  void deleteLocation() async {
+    if (selectedLocations.isNotEmpty) {
+      if (selectedLocations.contains(0)) {
+        await AppHelpers.showToast("Can't delete favourite location");
+      } else {
+        final int count = selectedLocations.length;
+        selectedLocations.forEach(weathers.removeAt);
+        selectedLocations.clear();
+        saveWeatherData(location, weathers);//Update the saved list
+        log("Deleted $count locations");
+        update();
+      }
+    } else {
+      await AppHelpers.showToast("Select location to delete");
+    }
   }
 
   @override

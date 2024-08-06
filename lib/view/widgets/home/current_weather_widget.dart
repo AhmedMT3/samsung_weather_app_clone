@@ -66,7 +66,10 @@ class CurrentWeatherWidget extends StatelessWidget {
             child: Image.network(
               "https:${current.condition!.icon}".replaceAll('64x64', '128x128'),
               errorBuilder: (context, error, stackTrace) => const Center(
-                  child: Text("No internet connection!\n Please Try again")),
+                  child: Icon(
+                Icons.wifi_off,
+                size: 40,
+              )),
               scale: 0.7,
             ),
           )
