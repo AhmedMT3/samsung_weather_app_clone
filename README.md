@@ -1,16 +1,17 @@
 # Samsung weather app clone
 
-Samsung weather app clone is a Flutter app with GetX state-management, integrates the free weather api from weatherapi.com
+This project is a clone of the Samsung Weather app built using Flutter. It features real-time weather updates, forecast information, and a sleek user interface. Ideal for learning Flutter and understanding weather API integrations.
 
 
 ## Features 🌟
-This app providing all of these features:
-- 📍 Weather data from user’s location.
-- 🌧️ Current weather data.
-- ⌚ Hourly forecast.
-- 📆 Daily forecast (8 days ahead).
-- 🏙️ Add other cities and locations.
-- 🔍 Search by city name, IP address, Latitude/Longitude (decimal degree), US Zipcode, UK Postcode and Canada Postalcode.
+- 🌧️ **Real-Time Weather Updates**: Fetches and displays the latest weather information.
+- 📆 **7-Day Weather Forecast**: Provides a detailed forecast for the upcoming week.
+- 📍 **Current Location Weather**: Automatically detects and shows weather for your current location.
+- 🔍 **Search Functionality**: Allows users to search for weather in different cities.
+- ⛅ **Detailed Weather Information**: Displays temperature, humidity, wind speed, and more.
+- 📱 **Sleek User Interface**: User-friendly design inspired by the Samsung Weather app.
+- 🌚 **Dark Mode**: Supports dark mode for a better user experience in low-light conditions.
+- 💻 **Responsive Design**: Optimized for both mobile and tablet screens.
 
 ## Screenshots 📸
 
