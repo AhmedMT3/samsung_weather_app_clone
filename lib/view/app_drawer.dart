@@ -104,6 +104,7 @@ class AppDrawer extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     customDivider(context),
+                    const Spacer()
                   ],
                 ),
         ),
