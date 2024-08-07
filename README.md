@@ -1,39 +1,38 @@
 # Samsung weather app clone
 
-Samsung weather app clone is a Flutter app using free weatherapi.com
+Samsung weather app clone is a Flutter app with GetX state-management, integrates the free weather api from weatherapi.com
 
-## Features
-Weather app providing all of these features:
-- Current weather data.
-- Hourly forecast.
-- Daily forecast (8 days ahead).
-- Search by city name, IP address, Latitude/Longitude (decimal degree), US Zipcode, UK Postcode and Canada Postalcode.
 
-### API
-Weather app powered by free weather API from [weatherapi.com](https://www.weatherapi.com)
-
-<a href="https://www.weatherapi.com/" title="Free Weather API"><img src='https://cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0"></a>
-
-<br>
+## Features 🌟
+This app providing all of these features:
+- 📍 Weather data from user’s location.
+- 🌧️ Current weather data.
+- ⌚ Hourly forecast.
+- 📆 Daily forecast (8 days ahead).
+- 🏙️ Add other cities and locations.
+- 🔍 Search by city name, IP address, Latitude/Longitude (decimal degree), US Zipcode, UK Postcode and Canada Postalcode.
 
 ## Screenshots 📸
 
 <div style="display: flex;">
-  <img src="assets/screenshots/home.png" alt="Cairo Weather Screenshot" height="300" style="margin-right: 30px;">
   <img src="assets/screenshots/home2.png" alt="Texas Cairo Weather Screenshot" height="300">
    <img src="assets/screenshots/details.png" alt="Details Home Page" height="300" style="margin-right: 30px;">
    <img src="assets/screenshots/drawer.png" alt="Drawer Screenshot" height="300">
-</div>
-<br>
-<div style="display: flex;">
-  <img src="assets/screenshots/search1.png" alt="Search Page" height="180" style="margin-right: 30px;">
-  <img src="assets/screenshots/search2.png" alt="Search Page" width="200">
-   <img src="assets/screenshots/search3.png" alt="Search Page" width="200" style="margin-right: 30px;">
-  <img src="assets/screenshots/search4.png" alt="Search Page" width="200">
+   <img src="assets/screenshots/locations_view.png" alt="Locations View" height="300">
+   <img src="assets/screenshots/dialog.png" alt="Alert Dialog" height="300">
+   <img src="assets/screenshots/search.png" alt="Search Page" height="300" style="margin-right: 30px;">
 </div>
 <br>
 
-## Packages
+### Search and autocomplete 🔍
+
+<div style="display: flex;">
+  <img src="assets/screenshots/search1.png" alt="Search Page" width="170" style="margin-right: 30px;">
+  <img src="assets/screenshots/search2.png" alt="Search Page" width="200">
+</div>
+<br>
+
+## Packages 📦
 You can read more about each package on [pub.dev](https://www.pub.dev)
 
 - `get`: ^4.6.6
@@ -50,7 +49,7 @@ You can read more about each package on [pub.dev](https://www.pub.dev)
 - `fluttertoast`: ^8.2.6
 
 ## Usage
-1. Clone this repository. Or [Download ZIP file 📁](https://github.com/ahmedmt3/weather_app/archive/refs/heads/main.zip)
+1. Clone this repository. Or [Download as ZIP file 📁](https://github.com/ahmedmt3/samsung_weather_app_clone/archive/refs/heads/main.zip)
 ```bash
 git clone https://github.com/ahmedmt3/samsung_weather_app_clone.git
 cd samsung_weather_app_clone
@@ -72,7 +71,14 @@ flutter run
 ```
 
 ## Installing
-Weather app isn't available on the play store yet, but you can download the apk [from here]()
+This app isn't available on the play store yet, but you can download the apk [from here]()
+
+## API
+This app powered by free weather API from [weatherapi.com](https://www.weatherapi.com)
+
+<a href="https://www.weatherapi.com/" title="Free Weather API"><img src='https://cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0"></a>
+
+<br>
 
 ## Contributing
 You can contribute by reporting bugs, suggesting improvements, and/or by helping out in code.
