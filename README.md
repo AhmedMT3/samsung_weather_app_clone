@@ -20,6 +20,7 @@ This app providing all of these features:
    <img src="assets/screenshots/drawer.png" alt="Drawer Screenshot" height="300">
    <img src="assets/screenshots/locations_view.png" alt="Locations View" height="300">
    <img src="assets/screenshots/dialog.png" alt="Alert Dialog" height="300">
+   <img src="assets/screenshots/settings.png" alt="Alert Dialog" height="300">
    <img src="assets/screenshots/search.png" alt="Search Page" height="300" style="margin-right: 30px;">
 </div>
 <br>
