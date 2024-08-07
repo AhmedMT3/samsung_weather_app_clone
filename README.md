@@ -1,6 +1,6 @@
-# Weather app
+# Samsung weather app clone
 
-Samsung weather app clone with Flutter using free weatherapi.com
+Samsung weather app clone is a Flutter app using free weatherapi.com
 
 ## Features
 Weather app providing all of these features:
@@ -16,15 +16,13 @@ Weather app powered by free weather API from [weatherapi.com](https://www.weathe
 
 <br>
 
-## Screenshots
+## Screenshots 📸
 
 <div style="display: flex;">
-  <img src="assets/screenshots/home.png" alt="Cairo Weather Screenshot" height="400" style="margin-right: 30px;">
-  <img src="assets/screenshots/home2.png" alt="Texas Cairo Weather Screenshot" height="400">
-</div>
-<div style="display: flex;">
-  <img src="assets/screenshots/details.png" alt="Details Home Page" height="400" style="margin-right: 30px;">
-  <img src="assets/screenshots/drawer.png" alt="Drawer Screenshot" height="400">
+  <img src="assets/screenshots/home.png" alt="Cairo Weather Screenshot" height="300" style="margin-right: 30px;">
+  <img src="assets/screenshots/home2.png" alt="Texas Cairo Weather Screenshot" height="300">
+   <img src="assets/screenshots/details.png" alt="Details Home Page" height="300" style="margin-right: 30px;">
+   <img src="assets/screenshots/drawer.png" alt="Drawer Screenshot" height="300">
 </div>
 <br>
 <div style="display: flex;">
@@ -34,7 +32,6 @@ Weather app powered by free weather API from [weatherapi.com](https://www.weathe
   <img src="assets/screenshots/search4.png" alt="Search Page" width="200">
 </div>
 <br>
-
 
 ## Packages
 You can read more about each package on [pub.dev](https://www.pub.dev)
@@ -47,19 +44,33 @@ You can read more about each package on [pub.dev](https://www.pub.dev)
 - `font_awesome_flutter`: ^10.7.0
 - `lottie`: ^3.1.2
 - `flutter_svg`: ^2.0.10+1
+- `dartz`: ^0.10.1
+- `get_storage`: ^2.1.1
+- `location`: ^7.0.0
+- `fluttertoast`: ^8.2.6
 
 ## Usage
 1. Clone this repository. Or [Download ZIP file 📁](https://github.com/ahmedmt3/weather_app/archive/refs/heads/main.zip)
 ```bash
-git clone https://github.com/ahmedmt3/weather_app.git
-cd weather_app
+git clone https://github.com/ahmedmt3/samsung_weather_app_clone.git
+cd samsung_weather_app_clone
 ```
-2. Get dependencies & Run project
+2. Get dependencies
 
-```bash
+```
 flutter pub get
+```
+
+3. Inside `lib/core/config/app_config.dart` edit this line with your API key, [get API key.](https://www.weatherapi.com/login.aspx)
+```dart
+static const String apiKey = "YOUR_API_KEY";
+```
+
+4. Run the project 🎉
+```
 flutter run
 ```
+
 ## Installing
 Weather app isn't available on the play store yet, but you can download the apk [from here]()
 
