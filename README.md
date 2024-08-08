@@ -1,4 +1,4 @@
-# Samsung weather app clone
+# Samsung weather app clone 🌦️
 
 This project is a clone of the Samsung Weather app built using Flutter. It features real-time weather updates, forecast information, and a sleek user interface. Ideal for learning Flutter and understanding weather API integrations.
 
